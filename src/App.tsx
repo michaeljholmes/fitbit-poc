@@ -1,37 +1,61 @@
-import { Button, Typography } from "@mui/material";
-import { useParams } from "react-router";
-import { useAsync } from "react-use";
+import { useQuery } from "react-query";
+import { Organisation, Paged } from "./types";
+import { OrgTable } from "./components/OrgTable";
+import { useState } from "react";
+import { Org } from "./components/Org";
+import { Stack, Box } from "@mui/material";
 
-const authLink = "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=23RNRL&scope=activity+cardio_fitness+electrocardiogram+heartrate+location+nutrition+oxygen_saturation+profile+respiratory_rate+settings+sleep+social+temperature+weight&code_challenge=-xnq9mUFT4fouuBSJCoqYlx1me_vY7RLCTlgMl5W0-E&code_challenge_method=S256&state=1m694w1a2h665o3v4u273k28700r3e1u&redirect_uri=http%3A%2F%2Flocalhost%3A5173"
+const URL= "http://localhost:6789/"
 
-const fitbitUserId = '3MFVV8';
+const fetchOrgansations = async (pageSize: number, page: number): Promise<Paged<Organisation>> => {
+  const pagedResponse = await fetch(`${URL}organisations?_page=${page + 1}&_limit=${pageSize}`);
+  const pagedItems: Organisation[] = await pagedResponse.json();
+  const totalReponse =  await fetch(`${URL}organisations`);
+  const total: Organisation[] = await totalReponse.json();
+  return {
+    items: pagedItems,
+    pageSize,
+    page,
+    totalItems: total.length
+  }
+ };
 
-const getSteps = () => fetch(
-    `https://api.fitbit.com//1/user/${fitbitUserId}/activities/date/2023-11-29.json`,
-    {method: "POST", headers: {"Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIyM1JOTDgiLCJzdWIiOiIzTUZWVjgiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJyYWN0IiwiZXhwIjoxNzAxNTA0MjIzLCJpYXQiOjE3MDE0NzU0MjN9.bhqpFCPbWnlg_pcXe-AqmSG_Hm9TvzKkHyDok5urJlI", }}
-);
+ const pageSizeOptions = [5,10,15];
 
-export const App = () => {
+export const App = () =>  {
 
-    let { code } = useParams();
+  const [pageSize, setPageSize] = useState(pageSizeOptions[0]);
+  const [page, setPage] = useState(0);
 
-    const steps = useAsync(async () => {
-        try {
-        const response = await getSteps();
-        const result = await response.json();
-        return result;
-        } catch(e){
-            console.log(e);
-        }finally {
-            return undefined;
-        }
-    }, [code]);
+  const { isLoading, isError, error, data } = useQuery({
+    queryKey: ["organisations", pageSize, page],
+    queryFn: () =>  fetchOrgansations(pageSize, page),
+    keepPreviousData: true,
+    staleTime: 5000000
+  });
 
-    if(steps?.value){
-        return <Typography>Got steps! {steps.value.summary.steps}</Typography>
-    }
+  const [selectedRowId, setSelectedRowId] = useState<number[] | undefined>(undefined)
 
-    return (
-        <Button onClick={() => {window.location.href = authLink}}>Auth with Fitbit</Button>
-    )
+  return (
+    <Box sx={{height: "100%", backgroundColor: "#ECF0F1"}}>
+      <Stack flexDirection={"row"} sx={{p: 4}}>      
+          <Org/>
+          <OrgTable
+            sx={{ml: 2}} 
+            rows={data?.items ?? []}
+            onPaginationModelChange={(model) => {
+              console.log(model)
+              setPage(model.page);
+              setPageSize(model.pageSize);
+            }}
+            rowCount={data?.totalItems ?? 0} 
+            paginationModel={{page, pageSize}}
+            pageSizeOptions={pageSizeOptions}
+            rowSelectionModel={selectedRowId}
+            setRowSelectionModel={setSelectedRowId}
+            isLoading={isLoading}
+          />
+        </Stack>
+      </Box>
+  );
 }

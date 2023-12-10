@@ -1,0 +1,39 @@
+{
+    "organisations": [
+        {
+            "id": 1,
+            "name": "Team1",
+            "value": 3
+        },
+        {
+            "id": 2,
+            "name": "Team2",
+            "value":23
+        },
+        {
+            "id": 3,
+            "name": "Team3",
+            "value": 1
+        },
+        {
+            "id": 4,
+            "name": "Team4",
+            "value": 1
+        },
+        {
+            "id": 5,
+            "name": "Team5",
+            "value": 1
+        },
+        {
+            "id": 6,
+            "name": "Team6",
+            "value": 1
+        }
+    ],
+    "users": {
+        "email": "test@test.com",
+        "name": "test",
+        "password": "test"
+    }
+}
