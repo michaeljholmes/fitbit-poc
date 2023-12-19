@@ -8,21 +8,20 @@ import { RecoilRoot } from 'recoil';
 import { App } from './App';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import './index.css';
+import { FitbitSync } from './components/FitBitSync';
 
 const theme = createTheme();
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <RecoilRoot>
           <ToastContainer />
           <ThemeProvider theme={theme}>
-            <App />
+            <FitbitSync />
           </ThemeProvider>
         </RecoilRoot>
       </QueryClientProvider>
     </BrowserRouter>
-  </React.StrictMode>
 )
