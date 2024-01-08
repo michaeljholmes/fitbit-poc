@@ -16,7 +16,7 @@ code_challenge=${codeChallenge}&code_challenge_method=S256&state=${generatedStat
 const fitbitUserId = '3MFVV8';
 
 const getSteps = (userId: string, token: string) => fetch(
-    `https://api.fitbit.com//1/user/${userId}/activities/date/2023-11-29.json`,
+    `https://api.fitbit.com//1/user/${userId}/activities/date/2023-12-29.json`,
     {method: "POST", headers: {"Authorization": `Bearer ${token}`, }}
 );
 
