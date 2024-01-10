@@ -1,27 +1,30 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { App } from "./App";
+import "./index.css";
 import { BrowserRouter } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { ThemeProvider, createTheme} from '@mui/material';
-import { RecoilRoot } from 'recoil';
-import { App } from './App';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import './index.css';
-import { FitbitSync } from './components/FitBitSync';
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { BaseRouter } from "./routing/BaseRouter";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme } from "@mui/material";
 
-const theme = createTheme();
 const queryClient = new QueryClient();
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#111"
+    }
+  }
+});
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
-        <RecoilRoot>
-          <ToastContainer />
-          <ThemeProvider theme={theme}>
-            <FitbitSync />
-          </ThemeProvider>
-        </RecoilRoot>
+        <ThemeProvider theme={theme}>
+          <BaseRouter />
+        </ThemeProvider>
       </QueryClientProvider>
     </BrowserRouter>
-)
+  </React.StrictMode>,
+);
