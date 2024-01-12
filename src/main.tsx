@@ -14,6 +14,21 @@ const theme = createTheme({
     primary: {
       main: "#111"
     }
+  },
+  typography: {
+    fontFamily: "'Poppins', sans-serif;",
+    h1: {
+      fontWeight: 900,
+      fontSize: "4rem"
+    },
+    h2: {
+      fontWeight: 800,
+      fontSize: "1.3rem"
+    },
+    h3: {
+      fontWeight: 800,
+      fontSize: "1.15rem"
+    }
   }
 });
 
