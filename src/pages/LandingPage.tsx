@@ -1,6 +1,6 @@
 import { Box, Stack, Typography, styled } from "@mui/material";
 import { opacify, rem } from "polished";
-import { useIsTablet } from "../routing/Template";
+import { useIsMobile, useIsTablet } from "../routing/Template";
 import { Copyright } from "../components/CopyRight";
 
 const powerUps = [
@@ -15,18 +15,20 @@ const powerUps = [
 export const LandingPage = () => {
 
     const isTablet = useIsTablet();
-
+    const isMobile = useIsMobile()
+    console.log(isMobile);
     return (
         <>
-            <Header >
+            <Header sx={{pl: 0.5, pr: 0.5}}>
                 <Typography variant="h1" sx={{
                     m: 2,
                     color: (theme) => theme.palette.common.white,
                     zIndex: 2,
-                    fontSize: "5rem",
-                    fontFamily: "'Holtwood One SC', serif"
+                    fontSize: isMobile ? "3rem" : "5rem",
+                    fontFamily: "'Holtwood One SC', serif",
+                    textAlign: "center"
                 }}>Stride Wars</Typography>
-                <Typography sx={{color: "#e9c46a", zIndex: 2, fontSize: "1.2rem", fontFamily: "'Holtwood One SC', serif"}}>The ultimate step competition with a twist.</Typography>
+                <Typography sx={{color: "#e9c46a", fontFamily: "'Courier New', Courier, monospace;", zIndex: 2, fontSize: "1.5rem", textAlign: "center", textTransform: "uppercase", fontWeight: 900}}>The ultimate step competition with a twist.</Typography>
             </Header>
                 <FirstSection>
                     <Typography variant="h2" sx={{mb: rem(20)}} >
@@ -42,7 +44,9 @@ export const LandingPage = () => {
                 </NotifySection>
                 <InfoSection sx={{
                         maxWidth: rem(960),
-                        margin: "auto"
+                        margin: "auto",
+                        pl: 2,
+                        pr: 2
                     }}>
                     <Paragraph>Welcome to Stride Wars, the ultimate step challenge where fitness meets fun and strategy! In this
                     exhilarating competition, teams come together to battle it out in a quest for
@@ -66,9 +70,9 @@ export const LandingPage = () => {
                             flexDirection={"row"}    
                             sx={{
                                 justifyContent: "space-between",
-                                width: isTablet ? rem(400) : rem(420),
-                                height: rem(100),
-                                p: rem(20),
+                                width: isMobile ? rem(320) : isTablet ? rem(400) : rem(420),
+                                height: isMobile ? rem(120) : rem(100),
+                                p: isMobile ? rem(10) : rem(20),
                                 boxShadow: (theme) => theme.shadows[1],
                                 backgroundColor: "#f9f9f9",
                                 borderRadius: rem(10),
@@ -100,14 +104,16 @@ export const LandingPage = () => {
 };
 
 const Header = styled(`header`)(({theme}) => ({
-    background: `url("./stridewars.png")  no-repeat center center fixed`,
+    background: `url("./stridewars_reduced.jpg")`,
     backgroundSize: "cover",
+    backgroundRepeat:   "no-repeat",
+    backgroundAttachment: "fixed",
+    backgroundPosition: "top center", 
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     height: "100vh",
-    backgroundPosition: "center",
     zIndex: 1,
     "&::before": {
         backgroundColor: theme.palette.common.black,
