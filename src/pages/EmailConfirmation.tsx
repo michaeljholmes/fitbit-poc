@@ -18,6 +18,9 @@ export const EmailConfirmationPage = () => {
             if (res.status === 409) {
                 setText("Your email address has already been verified");
             }
+            if (res.status === 400) {
+                setText("Could not verify email address. Please try again or email info@stridewars.com");
+            }
           })
           .catch(error => {
             setText("Email cannot be verified. Please try again or email info@stridewars.com if you are having issues");
