@@ -2,15 +2,20 @@ import { Typography, styled } from "@mui/material";
 import { useState, useEffect} from "react"
 
 export const EmailConfirmationPage = () => {
-    const [text, setText] = useState("Verifying your email address")
+    const [text, setText] = useState("Attempting to verify your email address...")
+    const url = "https://www.stridewars.com/api/verify-email"
     const params = new URLSearchParams(window.location.search)
-    let emailAddress = params.get("email")
-    let verificationCode = params.get("verification")
+    let emailAddress = params.get("emailAddress")
+    let verificationCode = params.get("verificationCode")
 
     useEffect(() => {
-        if (emailAddress === null || verificationCode === null) return;
-        console.log(`https://localhost:7225/api/verify-email?emailAddress=${emailAddress}&verificationCode=${verificationCode}`)
-        fetch(`https://localhost:7225/api/verify-email?emailAddress=${emailAddress}&verificationCode=${verificationCode}`)
+        if (emailAddress === null || verificationCode === null) 
+        {
+            setText("Please use the email verification link provided in your email.")
+            return;
+        }
+        setText("Verifying email address")
+            fetch(`${url}?emailAddress=${emailAddress}&verificationCode=${verificationCode}`)
           .then((res) => {
             if (res.status === 200) {
                 setText("Thank you - your email address has been verified");
@@ -24,7 +29,6 @@ export const EmailConfirmationPage = () => {
           })
           .catch(error => {
             setText("Email cannot be verified. Please try again or email info@stridewars.com if you are having issues");
-            console.log("error", error)
           })
       }, []);
 
@@ -32,7 +36,7 @@ export const EmailConfirmationPage = () => {
         <>
             <header>
                 <Typography variant="h1">
-                    Verifiying Email
+                 Email Verification
                 </Typography>
                 <Typography>
                     {text}

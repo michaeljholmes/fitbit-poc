@@ -1,0 +1,7 @@
+{
+  "domain": "dev-yxk3603z484r631r.us.auth0.com",
+  "clientId": "lhoExBR8df0K1DkXrp05t062fEzyZ2gV",
+  "audience": "https://www.stridewars.com/api",
+  "appOrigin": "http://localhost:3000",
+  "apiOrigin": "https://localhost:7225"
+}

@@ -1,7 +1,7 @@
 import { Box, Stack, Typography, styled } from "@mui/material";
 import { opacify, rem } from "polished";
 import { useIsMobile, useIsTablet } from "../routing/Template";
-import { Copyright } from "../components/CopyRight";
+import { Copyright } from "../components/Copyright";
 
 const powerUps = [
     {header: "Head to head", text: "Win your head to head challenges to unlock more power-ups", image: "./head-to-head.png"},
