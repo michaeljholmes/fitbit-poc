@@ -1,6 +1,5 @@
 import {
   Stack,
-  Box,
   Typography,
   TableHead,
   Paper,
@@ -17,9 +16,7 @@ interface OrgProps {
   users?: User[];
 }
 
-export const Org = ({
-  users
-}: OrgProps) => {
+export const Org = ({ users }: OrgProps) => {
   return (
     <Stack sx={{ width: rem(300) }}>
       <Stack
@@ -53,20 +50,18 @@ export const Org = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {users?.map(
-              ({ name }) => (
-                <TableRow
-                  key={name}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {name}
-                  </TableCell>
-                  <TableCell align="right">{"today"}</TableCell>
-                  <TableCell align="right">{"total"}</TableCell>
-                </TableRow>
-              ),
-            )}
+            {users?.map(({ name }) => (
+              <TableRow
+                key={name}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {name}
+                </TableCell>
+                <TableCell align="right">{"today"}</TableCell>
+                <TableCell align="right">{"total"}</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>

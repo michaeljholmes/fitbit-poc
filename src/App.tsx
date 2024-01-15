@@ -3,8 +3,7 @@ import { Organisation, Paged, User } from "./types";
 import { OrgTable } from "./components/OrgTable";
 import { useState } from "react";
 import { Org } from "./components/Org";
-import Grid from "@mui/material/Unstable_Grid2";
-import { Stack, Container, Box } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 
 const URL = "http://localhost:6789/";
 
@@ -26,16 +25,14 @@ const fetchOrgansations = async (
   };
 };
 
-const fetchUsers = async (
-  org: Organisation | undefined
-): Promise<User[]> => {
+const fetchUsers = async (org: Organisation | undefined): Promise<User[]> => {
   try {
-    if(!org) return [];
-    const response = await fetch(
-      `${URL}users`,
-    );
+    if (!org) return [];
+    const response = await fetch(`${URL}users`);
     const users: User[] = await response.json();
-    const orgUsers = users.filter(({id}) => org.users.some((mid) => mid === id));
+    const orgUsers = users.filter(({ id }) =>
+      org.users.some((mid) => mid === id),
+    );
     return orgUsers;
   } catch (e) {
     return [];
@@ -46,7 +43,7 @@ export const App = () => {
   const [pageSize, setPageSize] = useState(2);
   const [page, setPage] = useState(0);
 
-  const { isLoading, isError, error, data } = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey: ["organisations", pageSize, page],
     queryFn: () => fetchOrgansations(pageSize, page),
   });
@@ -57,24 +54,24 @@ export const App = () => {
 
   const [selectedOrg, setSelectedOrg] = useState<Organisation | undefined>();
 
-  const { isLoading: isUserLoading, data: userData } = useQuery({
+  const { data: userData } = useQuery({
     queryKey: ["users", selectedOrg],
     queryFn: () => fetchUsers(selectedOrg),
-   enabled: Boolean(selectedOrg)
+    enabled: Boolean(selectedOrg),
   });
 
   const onSelectedRow = async (row: string[]) => {
     setSelectedRowId(row);
-    const org = data?.items.find(({id}) => id === row[0]);
-    if(org){
+    const org = data?.items.find(({ id }) => id === row[0]);
+    if (org) {
       setSelectedOrg(org);
     }
-  }
+  };
 
   return (
     <Box sx={{ height: "100%", backgroundColor: "#ECF0F1" }}>
       <Stack flexDirection={"row"} sx={{ p: 4 }}>
-        <Org users={userData}/>
+        <Org users={userData} />
         <OrgTable
           sx={{ ml: 2 }}
           rows={data?.items ?? []}

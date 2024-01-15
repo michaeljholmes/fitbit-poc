@@ -5,9 +5,9 @@ export interface Organisation {
 }
 
 export interface Paged<T> {
-  items: T[],
-  pageSize: number,
-  page: number,
+  items: T[];
+  pageSize: number;
+  page: number;
   totalItems: number;
 }
 

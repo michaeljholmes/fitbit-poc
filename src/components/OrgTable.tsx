@@ -1,11 +1,5 @@
-import {
-  SxProps,
-} from "@mui/material";
-import {
-  DataGrid,
-  DataGridProps,
-  GridColDef,
-} from "@mui/x-data-grid";
+import { SxProps } from "@mui/material";
+import { DataGrid, DataGridProps, GridColDef } from "@mui/x-data-grid";
 import { rem } from "polished";
 import { Organisation } from "../types";
 
@@ -35,7 +29,7 @@ interface CustomDataGridProps {
   isLoading: boolean;
 }
 
-const tableColour = "#005891";
+// const tableColour = "#005891";
 
 export const OrgTable = ({
   sx,
