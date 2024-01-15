@@ -1,7 +1,7 @@
 import { Box, Stack, Typography, styled } from "@mui/material";
 import { rem } from "polished";
 import { useIsMobile, useIsTablet, useIsTabletDown } from "../routing/Template";
-import { Copyright } from "../components/CopyRight";
+import { Copyright } from "../components/Copyright";
 
 const powerUps = [
   {
