@@ -197,7 +197,7 @@ const Header = styled(`header`)(({ theme }) => ({
   background: `url("./stridewars_reduced.jpg")`,
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
-  backgroundAttachment: "fixed",
+  backgroundAttachment: "scroll",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
@@ -207,6 +207,7 @@ const Header = styled(`header`)(({ theme }) => ({
   "&::before": {
     backgroundColor: theme.palette.common.black,
     opacity: 0.8,
+    height: "100vh",
     position: "absolute",
     top: 0,
     bottom: 0,
