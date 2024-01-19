@@ -1,7 +1,8 @@
 import { Box, Stack, Typography, styled } from "@mui/material";
 import { rem } from "polished";
-import { useIsMobile, useIsTablet, useIsTabletDown } from "../routing/Template";
 import { Copyright } from "../components/Copyright";
+import { BackgroundHeader } from "../components/BackgroundHeader";
+import { useIsMobile, useIsTablet } from "../hooks/breakpoint";
 
 const powerUps = [
   {
@@ -39,38 +40,39 @@ const powerUps = [
 export const LandingPage = () => {
   const isTablet = useIsTablet();
   const isMobile = useIsMobile();
-  const isLessThanMobile = useIsTabletDown();
-  console.log(isLessThanMobile);
+
   return (
     <>
-      <Header sx={{ pl: 0.5, pr: 0.5, backgroundPosition: isLessThanMobile ? `calc(50% + ${rem(25)}) 50%` : "center center"}}>
-        <Typography
-          variant="h1"
-          sx={{
-            m: 2,
-            color: (theme) => theme.palette.common.white,
-            zIndex: 2,
-            fontSize: isMobile ? "3rem" : "5rem",
-            fontFamily: "'Holtwood One SC', serif",
-            textAlign: "center",
-          }}
-        >
-          Stride Wars
-        </Typography>
-        <Typography
-          sx={{
-            color: "#e9c46a",
-            fontFamily: "'Courier New', Courier, monospace;",
-            zIndex: 2,
-            fontSize: "1.5rem",
-            textAlign: "center",
-            textTransform: "uppercase",
-            fontWeight: 900,
-          }}
-        >
-          The ultimate step competition with a twist.
-        </Typography>
-      </Header>
+      <BackgroundHeader >
+        <>
+          <Typography
+            variant="h1"
+            sx={{
+              m: 2,
+              color: (theme) => theme.palette.common.white,
+              zIndex: 2,
+              fontSize: isMobile ? "3rem" : "5rem",
+              fontFamily: "'Holtwood One SC', serif",
+              textAlign: "center",
+            }}
+          >
+            Stride Wars
+          </Typography>
+          <Typography
+            sx={{
+              color: "#e9c46a",
+              fontFamily: "'Courier New', Courier, monospace;",
+              zIndex: 2,
+              fontSize: "1.5rem",
+              textAlign: "center",
+              textTransform: "uppercase",
+              fontWeight: 900,
+            }}
+          >
+            The ultimate step competition with a twist.
+          </Typography>
+        </>
+      </BackgroundHeader>
       <FirstSection>
         <Typography variant="h2" sx={{ mb: rem(20) }}>
           <>🌟 Join Our Inaugural Competition - Launching in Spring! 🌟</>

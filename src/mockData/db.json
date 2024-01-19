@@ -1,42 +1,66 @@
 {
-    "organisations": [
+    "challenges": [{
+        "id": "challenge1",
+        "name": "Challenge Name",
+        "creator": "user1",
+        "teams": ["team1", "team2", "team3"]
+        }
+    ],
+    "teams": [
         {
-            "id": "1",
-            "name": "Optix1",
-            "value": 3,
-            "users": ["1", "2"]
+            "id": "team1",
+            "name": "Team 1",
+            "position": 3,
+            "users": ["user1"]
         },
         {
-            "id": "2",
-            "name": "Optix2",
-            "value":23,
-            "users": ["3"]
+            "id": "team2",
+            "name": "Team 2",
+            "position":1,
+            "users": ["user2"]
         },
         {
-            "id": "3",
-            "name": "Optix3",
-            "value": 1,
-            "users": ["1", "2"]
+            "id": "team3",
+            "name": "Team 3",
+            "position": 2,
+            "users": ["user3"]
         }
     ],
     "users": [
         {
-            "id": "1",
+            "id": "user1",
             "email": "test@test.com",
             "name": "test",
-            "password": "test"
+            "password": "test",
+            "isCreator": true,
+            "createdId": "challenge1",
+            "participantId": "challenge1",
+            "isFitbitIntegrated": false
+
         },
         {
-            "id": "2",
+            "id": "user2",
             "email": "test1@test.com",
             "name": "test1",
-            "password": "test"
+            "password": "test",
+            "participantId": "challenge1",
+            "isFitbitIntegrated": true
+
         },
         {
-            "id": "3",
+            "id": "user3",
             "email": "test3@test.com",
             "name": "test3",
-            "password": "test"
+            "password": "test",
+            "participantId": "challenge1",
+            "isFitbitIntegrated": false
+        },
+        {
+            "id": "user4",
+            "email": "test4@test.com",
+            "name": "test4",
+            "password": "test",
+            "isFitbitIntegrated": false
         }
     ]
 }

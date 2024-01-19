@@ -1,7 +1,7 @@
 import { SxProps } from "@mui/material";
 import { DataGrid, DataGridProps, GridColDef } from "@mui/x-data-grid";
 import { rem } from "polished";
-import { Organisation } from "../types";
+import { Team } from "../api/api.types";
 
 const columns: GridColDef[] = [
   {
@@ -19,7 +19,7 @@ const columns: GridColDef[] = [
 
 interface CustomDataGridProps {
   sx?: SxProps;
-  rows: Organisation[];
+  rows: Team[];
   paginationModel: DataGridProps["paginationModel"];
   pageSizeOptions: DataGridProps["pageSizeOptions"];
   onPaginationModelChange: DataGridProps["onPaginationModelChange"];
@@ -31,7 +31,7 @@ interface CustomDataGridProps {
 
 // const tableColour = "#005891";
 
-export const OrgTable = ({
+export const Leaderbaord = ({
   sx,
   rows,
   paginationModel,

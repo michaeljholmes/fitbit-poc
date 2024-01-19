@@ -10,22 +10,10 @@ import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { rem } from "polished";
 import { Outlet } from "react-router";
-import { useMediaQuery, Theme } from "@mui/material";
 import { MobileNavBar } from "./nav";
 import { DesktopNavBar } from "./nav/DesktopNavBar";
 import { routes } from "./routes";
-
-export const useIsDesktop = () =>
-  useMediaQuery((theme: Theme) => theme.breakpoints.up("lg"));
-
-export const useIsTablet = () =>
-  useMediaQuery((theme: Theme) => theme.breakpoints.up("md"));
-
-export const useIsTabletDown = () =>
-  useMediaQuery((theme: Theme) => theme.breakpoints.down("md"));
-
-export const useIsMobile = () =>
-  useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
+import { useIsDesktop } from "../hooks/breakpoint";
 
 export const Template = () => {
   const isDesktop = useIsDesktop();

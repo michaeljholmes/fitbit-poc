@@ -10,13 +10,13 @@ import {
   TableRow,
 } from "@mui/material";
 import { rem } from "polished";
-import { User } from "../types";
+import { User } from "../api/api.types";
 
-interface OrgProps {
+interface TeamSummaryProps {
   users?: User[];
 }
 
-export const Org = ({ users }: OrgProps) => {
+export const TeamSummary = ({ users }: TeamSummaryProps) => {
   return (
     <Stack sx={{ width: rem(300) }}>
       <Stack
