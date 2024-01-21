@@ -3,8 +3,10 @@ import { Paged } from "../../types";
 import { Leaderbaord } from "../../components/Leaderboard";
 import { useState } from "react";
 import { TeamSummary } from "../../components/TeamSummary";
-import { Stack, Box } from "@mui/material";
+import { Stack, Box, Typography, Button } from "@mui/material";
 import { Challenge, Team, User } from "../../api/api.types";
+import { rem } from "polished";
+import { useNavigate } from "react-router";
 
 const URL = "http://localhost:6789/";
 
@@ -46,7 +48,7 @@ const fetchTeam = async (teamIds: string[]): Promise<User[]> => {
 };
 
 interface ChallengeProps {
- // user: any;
+  user: User;
   challengeId: string;
 }
 
@@ -54,10 +56,12 @@ interface ChallengeProps {
 
 export const ChallengePage = ({
   challengeId,
-  
+  user
 }: ChallengeProps) => {
   const [pageSize, setPageSize] = useState(2);
   const [page, setPage] = useState(0);
+  const isNotFitbitEnabled = !user.isFitbitIntegrated;
+  const navigate = useNavigate();
 
   const { isLoading: isChallengeLoading, data: challenge } = useQuery({
     queryKey: ["challenge", challengeId],
@@ -94,25 +98,34 @@ export const ChallengePage = ({
   };
 
   return (
-    <Box sx={{ height: "100%", backgroundColor: "#ECF0F1" }}>
-      <Stack flexDirection={"row"} sx={{ p: 4 }}>
-        <TeamSummary users={teamMembers} />
-        <Leaderbaord
-          sx={{ ml: 2 }}
-          rows={teams?.items ?? []}
-          onPaginationModelChange={(model) => {
-            console.log(model);
-            setPage(model.page);
-            setPageSize(model.pageSize);
-          }}
-          rowCount={teams?.totalItems ?? 0}
-          paginationModel={{ page, pageSize }}
-          pageSizeOptions={[2, 4, 6]}
-          rowSelectionModel={selectedRowId}
-          setRowSelectionModel={onSelectedRow}
-          isLoading={isChallengeLoading || isTeamsLoading}
-        />
-      </Stack>
-    </Box>
+    <Stack sx={{ height: "100%", backgroundColor: "#ECF0F1" }}>
+      {isNotFitbitEnabled && 
+        <Stack alignItems={"center"} sx={{m: 1}}>
+          <Typography textAlign="center" variant="h2">You must connect Stridewars with fitbit before we can track your steps!</Typography>
+          <Typography textAlign="center" variant="h3">Its easy to set up and totally free. Haven't got a fitbit, not to worry, you can use your phone, with the Fitbit app to count your steps.</Typography>
+          <Button sx={{m: 1, width: rem(250)}} onClick={() => navigate("tracker")} variant="outlined">Click here to get set up!</Button>
+        </Stack>}
+      <Stack sx={{flex: 1, position: "relative"}}>
+        <Box sx={{...(isNotFitbitEnabled && {position: "absolute", backgroundColor: "black", flex: 1, width: "100%", height: "100%", opacity: 0.5, zIndex: 2})}}/>
+        <Stack flexDirection={"row"} sx={{ p: 4}}>
+          <TeamSummary users={teamMembers} />
+          <Leaderbaord
+            sx={{ ml: 2 }}
+            rows={teams?.items ?? []}
+            onPaginationModelChange={(model) => {
+              console.log(model);
+              setPage(model.page);
+              setPageSize(model.pageSize);
+            }}
+            rowCount={teams?.totalItems ?? 0}
+            paginationModel={{ page, pageSize }}
+            pageSizeOptions={[2, 4, 6]}
+            rowSelectionModel={selectedRowId}
+            setRowSelectionModel={onSelectedRow}
+            isLoading={isChallengeLoading || isTeamsLoading}
+          />
+        </Stack>
+      </Stack>  
+    </Stack>
   );
 };

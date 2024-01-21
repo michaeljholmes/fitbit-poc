@@ -60,6 +60,7 @@
             "email": "test4@test.com",
             "name": "test4",
             "password": "test",
+            "isCreator": true,
             "isFitbitIntegrated": false
         }
     ]

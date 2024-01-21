@@ -1,5 +1,6 @@
 import EmailIcon from "@mui/icons-material/Email";
 import HomeIcon from "@mui/icons-material/Home";
+import TimeLineIcon from "@mui/icons-material/TimeLine";
 import { Route } from "./nav";
 
 export const routes: Route[] = [
@@ -9,8 +10,8 @@ export const routes: Route[] = [
     text: "Dashboard",
   },
   {
-    to: "/dashboard/test",
-    icon: <EmailIcon />,
-    text: "Test",
+    to: "/dashboard/tracker",
+    icon: <TimeLineIcon />,
+    text: "Tracker",
   },
 ];

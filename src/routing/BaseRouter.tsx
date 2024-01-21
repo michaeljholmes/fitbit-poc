@@ -4,6 +4,7 @@ import { LandingPage } from "../pages/LandingPage";
 import { VerificationPage } from "../pages/VerificationPage";
 import { CreateChallenge } from "../pages/Dashboard/CreateChallenge";
 import { DashboardPage } from "../pages/Dashboard/DashboardPage";
+import { FitBitIntegration } from "../pages/Dashboard/FitBitIntegration";
 
 export const BaseRouter = () => (
   <Routes>
@@ -12,7 +13,7 @@ export const BaseRouter = () => (
     <Route path="dashboard">
       <Route element={<Template />}>
         <Route index element={<DashboardPage />} />
-        <Route path="test" element={<p>Test</p>} />
+        <Route path="tracker" element={<FitBitIntegration />} />
       </Route>
     </Route>
   </Routes>

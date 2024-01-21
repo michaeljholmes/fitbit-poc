@@ -29,7 +29,7 @@ export const Template = () => {
   return isDesktop ? (
     <Stack sx={{ flex: 1 }} height={"100vh"} width={"100vw"}>
       <DesktopNavBar onLinkClick={onLinkClick} routes={routes} />
-      <Box
+      <Stack
         sx={{
           backgroundColor: "#E7EEF7",
           height: "100vh",
@@ -38,7 +38,7 @@ export const Template = () => {
         }}
       >
         <Outlet />
-      </Box>
+      </Stack>
     </Stack>
   ) : (
     <Stack height={"100vh"}>
@@ -63,9 +63,9 @@ export const Template = () => {
           <MenuIcon />
         </IconButton>
       </Box>
-      <Box sx={{ height: `calc(100vh - 42px)` }}>
+      <Stack sx={{ height: `calc(100vh - 42px)` }}>
         <Outlet />
-      </Box>
+      </Stack>
       <Drawer
         sx={{
           width: rem(270),

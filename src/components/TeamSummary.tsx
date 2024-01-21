@@ -18,7 +18,7 @@ interface TeamSummaryProps {
 
 export const TeamSummary = ({ users }: TeamSummaryProps) => {
   return (
-    <Stack sx={{ width: rem(300) }}>
+    <Stack sx={{ width: rem(300), zIndex: 1}}>
       <Stack
         flexDirection="row"
         justifyContent={"flex-end"}
@@ -33,9 +33,9 @@ export const TeamSummary = ({ users }: TeamSummaryProps) => {
           height: rem(40),
         }}
       >
-        <Typography sx={{ flex: 1 }}>Optix</Typography>
+        <Typography sx={{ flex: 1 }}>Team Name</Typography>
         <Typography sx={{ width: rem(70) }}>Total</Typography>
-        <Typography sx={{ width: rem(70) }}>Optix</Typography>
+        <Typography sx={{ width: rem(70) }}>12345</Typography>
       </Stack>
       <TableContainer component={Paper}>
         <Table
