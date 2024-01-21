@@ -56,9 +56,9 @@
             "isFitbitIntegrated": false
         },
         {
-            "id": "user4",
-            "email": "test4@test.com",
-            "name": "test4",
+            "id": "user5",
+            "email": "test5@test.com",
+            "name": "test5",
             "password": "test",
             "isCreator": true,
             "isFitbitIntegrated": false

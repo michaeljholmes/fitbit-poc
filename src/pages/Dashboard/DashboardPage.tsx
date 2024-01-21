@@ -49,7 +49,7 @@ export const DashboardPage = () => {
                     New User
                 </Button>
                 <Button variant="outlined" onClick={() => setUser(newUserWithFitbit)}>
-                    New User with Fitbit
+                    User with Fitbit
                 </Button>
             </Stack>
             <DashboardPageWithUser user={user}/>
