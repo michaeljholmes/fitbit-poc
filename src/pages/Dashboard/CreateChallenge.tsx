@@ -1,4 +1,5 @@
 import { Typography } from "@mui/material";
+import { CreateChallengeForm } from "../../form/CreateChallengeForm";
 
 export const CreateChallenge = () => {
     return (
@@ -28,7 +29,7 @@ export const CreateChallenge = () => {
                     </Typography>
                 </li>
             </ul>
-            
+            <CreateChallengeForm />
         </>
     );
 }

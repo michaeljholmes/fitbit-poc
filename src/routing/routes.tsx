@@ -1,6 +1,7 @@
-import EmailIcon from "@mui/icons-material/Email";
 import HomeIcon from "@mui/icons-material/Home";
-import TimeLineIcon from "@mui/icons-material/Timeline";
+import TimeLineIcon from "@mui/icons-material/TimeLine";
+import SettingIcon from "@mui/icons-material/Settings";
+
 import { Route } from "./nav";
 
 export const routes: Route[] = [
@@ -13,5 +14,10 @@ export const routes: Route[] = [
     to: "/dashboard/tracker",
     icon: <TimeLineIcon />,
     text: "Tracker",
+  },
+  {
+    to: "/dashboard/admin",
+    icon: <SettingIcon />,
+    text: "Admin",
   },
 ];
