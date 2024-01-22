@@ -1,5 +1,5 @@
 import HomeIcon from "@mui/icons-material/Home";
-import TimeLineIcon from "@mui/icons-material/TimeLine";
+import {TimelineOutlined} from "@mui/icons-material";
 import SettingIcon from "@mui/icons-material/Settings";
 
 import { Route } from "./nav";
@@ -12,7 +12,7 @@ export const routes: Route[] = [
   },
   {
     to: "/dashboard/tracker",
-    icon: <TimeLineIcon />,
+    icon: <TimelineOutlined />,
     text: "Tracker",
   },
   {
