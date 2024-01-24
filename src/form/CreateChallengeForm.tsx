@@ -1,4 +1,4 @@
-import { Button, TextField, Box, Typography, Stack } from "@mui/material";
+import { Button, TextField, Box, Typography, Stack, Tab } from "@mui/material";
 import {
   useForm,
   Controller,
@@ -10,6 +10,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { rem } from "polished";
 import { ErrorMessage } from '@hookform/error-message';
 import { CreateTeam, Team } from "./CreateTeam";
+import { useState, SyntheticEvent } from "react";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 
 interface Challenge {
   challenge: string;
@@ -49,7 +51,7 @@ const challengeSchema = yup.object({
 
 export const CreateChallengeForm = () => {
   const { handleSubmit, control, watch, formState: {errors}, getValues} = useForm<Challenge>({
-    mode: "onBlur",
+    mode: "all",
     defaultValues: {
       challenge: "",
       teams: [],
@@ -57,19 +59,41 @@ export const CreateChallengeForm = () => {
     resolver: yupResolver(challengeSchema),
   });
 
+
   const onSubmit: SubmitHandler<Challenge> = (data) => {
     console.log("SUBMITTED");
     console.log(data);
   };
+
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "teams",
   });
 
-  console.log(errors);
-  console.log({values: getValues()})
 
+  const {teams} = watch();
+
+
+  const [value, setValue] = useState("0");
+
+
+  const handleChange = (event: SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
+
+  const addTeam = () => {
+    append({teamName: "", members: []});
+    setValue((fields.length).toString());
+  }
+  const removeTeam = (index: number) => {
+    remove(index);
+    setValue("0");
+  }
+
+  console.log(errors);
+ 
   return (
     <>
       <Typography>Create your team</Typography>
@@ -98,32 +122,31 @@ export const CreateChallengeForm = () => {
           <Button
             sx={{ ml: 1 }}
             variant="contained"
-            disabled={fields.length >= maxTotal}
-            onClick={() => append({teamName: "", members: []})}
+            onClick={addTeam}
           >
             Add team
           </Button>
         </Stack>
-        {fields.map((item, index) => (
-          <Box key={item.id}>
-            <Stack flexDirection="row">
+        <TabContext value={value}>
+          <TabList onChange={handleChange} >
+            {teams.map(({teamName}, index) => {
+               return <Tab key={index} label={`Team Name: ${index + 1}`} value={index.toString()} />
+              }
+            )}
+          </TabList>
+          {fields.map((item, index) => (
+            <TabPanel value={index.toString()} key={item.id}>
               <CreateTeam 
                 name={`teams.[${index}]`}
                 control={control}
                 errors={errors}
+                removeTeam={() => removeTeam(index)}
+                error={Boolean(errors && errors.teams && errors.teams[index])}
               />
-              <Button
-                variant="contained"
-                sx={{ height: rem(40), mt: 1 }}
-                onClick={() => remove(index)}
-              >
-                Remove team
-              </Button>
-            </Stack>
-          </Box>
-        ))}
-        {errors?.teams?.root?.message && <Typography>Own Error -{errors.teams.root.message}</Typography>}
-        {/* <ErrorMessage errors={errors} name="teams"/> */}
+            </TabPanel>
+          ))}
+        </TabContext>
+        {fields.length < 2 && <Typography sx={{color: (theme) => theme.palette.error.main}}>You must have two teams</Typography>}
         <Button sx={{ mt: 1 }} variant="contained" type="submit">
           Create Team
         </Button>

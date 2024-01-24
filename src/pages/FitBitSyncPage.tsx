@@ -38,11 +38,11 @@ const authoriseFitbit = (code: string) =>
       grant_type: "authorization_code",
       code,
       code_verifier: codeVerifier,
-      redirect_uri: "http://localhost:5173",
+      redirect_uri: "http://localhost:5173/fitbit",
     }),
   });
 
-export const FitbitSync = () => {
+export const FitbitSyncPage = () => {
   const [searchParams] = useSearchParams();
 
   const steps = useAsync(async () => {
@@ -58,8 +58,6 @@ export const FitbitSync = () => {
       console.log(auth);
       const response = await getSteps(auth.user_id, auth.access_token);
       const result = await response.json();
-      // store tokens in browser
-
       console.log(result);
       return result;
     } catch (e) {
