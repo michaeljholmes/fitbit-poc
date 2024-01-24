@@ -2,13 +2,14 @@ import { Route, Routes } from "react-router-dom";
 import { Template } from "./Template";
 import { LandingPage } from "../pages/LandingPage";
 import { VerificationPage } from "../pages/VerificationPage";
-import { CreateChallenge } from "../pages/Dashboard/CreateChallenge";
+import { DemoPage } from "../pages/DemoPage"
 import { DashboardPage } from "../pages/Dashboard/DashboardPage";
 import { FitBitIntegration } from "../pages/Dashboard/FitBitIntegration";
 
 export const BaseRouter = () => (
   <Routes>
     <Route path="/" element={<LandingPage />} />
+    <Route path="/demo" element={<DemoPage />} />
     <Route path="verification" element={<VerificationPage />} />
     <Route path="dashboard">
       <Route element={<Template />}>
