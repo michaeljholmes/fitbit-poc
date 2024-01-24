@@ -50,7 +50,7 @@ const challengeSchema = yup.object({
 });
 
 export const CreateChallengeForm = () => {
-  const { handleSubmit, control, watch, formState: {errors}, getValues} = useForm<Challenge>({
+  const { handleSubmit, control, watch, formState: {errors, touchedFields}, getValues} = useForm<Challenge>({
     mode: "all",
     defaultValues: {
       challenge: "",
@@ -146,7 +146,7 @@ export const CreateChallengeForm = () => {
             </TabPanel>
           ))}
         </TabContext>
-        {fields.length < 2 && <Typography sx={{color: (theme) => theme.palette.error.main}}>You must have two teams</Typography>}
+        {Object.keys(errors).length > 0 && fields.length < 2 && <Typography sx={{color: (theme) => theme.palette.error.main}}>You must have two teams</Typography>}
         <Button sx={{ mt: 1 }} variant="contained" type="submit">
           Create Team
         </Button>
