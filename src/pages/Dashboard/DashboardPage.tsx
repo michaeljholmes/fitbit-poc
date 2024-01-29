@@ -4,7 +4,7 @@ import { CreateChallenge } from "./CreateChallenge";
 import { Button, Stack } from "@mui/material";
 import { User } from "../../api/api.types";
 
-const newUserNoFitbit = {
+export const newUserNoFitbit = {
     id: "2",
     email: "test1@test.com",
     name: "test1",
@@ -15,7 +15,7 @@ const newUserNoFitbit = {
     isFitbitIntegrated: false
   };
 
-  const newCreator = {
+ export const newCreator = {
     id: "user5",
     email: "test5@test.com",
     name: "test5",
@@ -24,7 +24,7 @@ const newUserNoFitbit = {
     isFitbitIntegrated: false
 }
 
-const newUserWithFitbit = {
+export const newUserWithFitbit = {
     id: "2",
     email: "test1@test.com",
     name: "test1",

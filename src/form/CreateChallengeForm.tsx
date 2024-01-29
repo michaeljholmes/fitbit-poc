@@ -74,14 +74,11 @@ export const CreateChallengeForm = () => {
 
   const {teams} = watch();
 
-
   const [value, setValue] = useState("0");
-
 
   const handleChange = (event: SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
-
 
   const addTeam = () => {
     append({teamName: "", members: []});
@@ -91,8 +88,6 @@ export const CreateChallengeForm = () => {
     remove(index);
     setValue("0");
   }
-
-  console.log(errors);
  
   return (
     <>

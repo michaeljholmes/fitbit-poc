@@ -1,7 +1,26 @@
-import { Typography } from "@mui/material";
+import { Button, ButtonBase, Tab, Tooltip, Typography } from "@mui/material";
 import { CreateChallengeForm } from "../../form/CreateChallengeForm";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { useState, SyntheticEvent } from "react";
+import { CreateTeam } from "../../form/CreateTeam";
 
 export const CreateChallenge = () => {
+
+    const [value, setValue] = useState("1");
+    const [generatedLink, setGeneratedLink] = useState<string | undefined>();
+
+    const handleChange = (event: SyntheticEvent, newValue: string) => {
+      setValue(newValue);
+    };
+
+    const generateLink = () => {
+        setGeneratedLink("www.stridewars.com/join-challenge/ijwehf7834fh");
+    }
+
+    console.log(generateLink, Boolean(generatedLink))
+    
+    const hasGeneratedLink = Boolean(generatedLink);
+
     return (
         <>
             <Typography>
@@ -29,7 +48,28 @@ export const CreateChallenge = () => {
                     </Typography>
                 </li>
             </ul>
-            <CreateChallengeForm />
+            <TabContext value={value}>
+                <TabList onChange={handleChange} >
+                    <Tab label={`Manually Create Team`} value="1" disabled={hasGeneratedLink} sx={{...(hasGeneratedLink && {cursor: "not-allowed"})}}/>
+                    <Tab label={`Automatic Team Creation`} value="2" />
+                </TabList>
+                <TabPanel value={"1"}>
+                    <CreateChallengeForm />
+                </TabPanel>
+                <TabPanel value={"2"}>
+                    <Typography>Send a link too all those who want to join. 24 hours before the challenge begins, they'll be divided into teams at random.</Typography>
+                    <Button variant="outlined" onClick={generateLink} disabled={hasGeneratedLink}>Click here to generate a link</Button>
+                    {hasGeneratedLink && 
+                        <>
+                            <Typography>Click the link to copy it.</Typography>
+                            <Tooltip title={`Click to copy link`}>
+                                <ButtonBase onClick={() => {navigator.clipboard.writeText(generatedLink as string)}}>
+                                    <Typography sx={{color: "red", textDecoration: "underline"}}>{generatedLink}</Typography>
+                                </ButtonBase>
+                            </Tooltip>
+                        </>}
+                </TabPanel>
+            </TabContext>
         </>
     );
 }
