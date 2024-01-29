@@ -1,10 +1,8 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { rem } from "polished";
-import { useState } from "react";
-import { newUserNoFitbit, newUserWithFitbit } from "./DashboardPage";
-import { User } from "../../api/api.types";
-import { useSearchParams } from "react-router-dom";
+import { useOutletContext, useSearchParams } from "react-router-dom";
 import { useAsync } from "react-use";
+import { OutletContext } from "../../routing/Template";
 
 const clientId = "23RNL8";
 const codeChallenge = "pQgSBsfD_S2HqKLsRolDFljd5ECIgerjRM9Izlkqv5w";
@@ -15,25 +13,8 @@ code_challenge=${codeChallenge}&code_challenge_method=S256&state=${generatedStat
 
 export const FitBitIntegration = () => {
 
-    const [user, setUser] = useState(newUserNoFitbit);
-
-    return (
-        <Stack sx={{flex: 1}}>
-            <Stack flexDirection="row" sx={{m: 1}}>
-                <Button variant="outlined" onClick={() => setUser(newUserNoFitbit)}>
-                    New User
-                </Button>
-                <Button variant="outlined" onClick={() => setUser(newUserWithFitbit)}>
-                    User with Fitbit
-                </Button>
-            </Stack>
-            <FitbitPageWithUser user={user}/>
-        </Stack>
-    );
-}
-
-const FitbitPageWithUser = ({user}: any) => {
-
+    const { user } = useOutletContext<OutletContext>();
+    const { isFitbitIntegrated} = user;
     const [searchParams] = useSearchParams();
 
     //Validate user server side, trigger refetching user
@@ -58,7 +39,7 @@ const FitbitPageWithUser = ({user}: any) => {
     }
 
     
-    if(user.isFitbitIntegrated) {
+    if(isFitbitIntegrated) {
         return(
             <>
                 <Typography>

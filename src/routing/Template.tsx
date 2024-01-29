@@ -1,5 +1,6 @@
 import {
   Box,
+  CircularProgress,
   Drawer,
   IconButton,
   Stack,
@@ -14,10 +15,15 @@ import { MobileNavBar } from "./nav";
 import { DesktopNavBar } from "./nav/DesktopNavBar";
 import { routes } from "./routes";
 import { useIsDesktop } from "../hooks/breakpoint";
+import { useUser } from "../api/hooks/useUser";
+import { User } from "../api/api.types";
+
+export interface OutletContext {
+  user: User;
+}
 
 export const Template = () => {
   const isDesktop = useIsDesktop();
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const onLinkClick = useEventCallback(() => {
@@ -25,6 +31,16 @@ export const Template = () => {
       setIsDrawerOpen(false);
     }
   });
+
+  const { data, isLoading } = useUser();
+
+  if(isLoading){
+      return <Stack sx={{mt: 16}} alignItems={"center"}><CircularProgress /></Stack>;
+  }
+
+  if(!data) {
+      return <p>No user found!</p>
+  }
 
   return isDesktop ? (
     <Stack sx={{ flex: 1 }} height={"100vh"} width={"100vw"}>
@@ -37,7 +53,7 @@ export const Template = () => {
           minWidth: 0,
         }}
       >
-        <Outlet />
+        <Outlet context={{user: data} satisfies OutletContext}/>
       </Stack>
     </Stack>
   ) : (
@@ -64,7 +80,7 @@ export const Template = () => {
         </IconButton>
       </Box>
       <Stack sx={{ height: `calc(100vh - 42px)` }}>
-        <Outlet />
+        <Outlet context={{user: data}  satisfies OutletContext} />
       </Stack>
       <Drawer
         sx={{
