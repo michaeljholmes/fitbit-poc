@@ -13,11 +13,18 @@ export interface User {
     name: string;
     creator: string;
     users: string[];
+    startTime: string;
   }
 
   export interface Team {
     id: string;
     name: string;
-    position: 1,
+    position: number,
     users: string[]
   }
+
+  export interface FitbitDetails {
+    clientId: string;
+    codeChallenge: string;
+    generatedState: string;
+}

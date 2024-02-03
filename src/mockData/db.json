@@ -1,67 +1,82 @@
 {
-    "challenges": [{
-        "id": "challenge1",
-        "name": "Challenge Name",
-        "creator": "user1",
-        "teams": ["team1", "team2", "team3"]
-        }
-    ],
-    "teams": [
-        {
-            "id": "team1",
-            "name": "Team 1",
-            "position": 3,
-            "users": ["user1"]
-        },
-        {
-            "id": "team2",
-            "name": "Team 2",
-            "position":1,
-            "users": ["user2"]
-        },
-        {
-            "id": "team3",
-            "name": "Team 3",
-            "position": 2,
-            "users": ["user3"]
-        }
-    ],
-    "users": [
-        {
-            "id": "user1",
-            "email": "test@test.com",
-            "name": "test",
-            "password": "test",
-            "isCreator": true,
-            "createdId": "challenge1",
-            "participantId": "challenge1",
-            "isFitbitIntegrated": false
-
-        },
-        {
-            "id": "user2",
-            "email": "test1@test.com",
-            "name": "test1",
-            "password": "test",
-            "participantId": "challenge1",
-            "isFitbitIntegrated": true
-
-        },
-        {
-            "id": "user3",
-            "email": "test3@test.com",
-            "name": "test3",
-            "password": "test",
-            "participantId": "challenge1",
-            "isFitbitIntegrated": false
-        },
-        {
-            "id": "user5",
-            "email": "test5@test.com",
-            "name": "test5",
-            "password": "test",
-            "isCreator": true,
-            "isFitbitIntegrated": false
-        }
-    ]
+  "challenges": [
+    {
+      "id": "challenge1",
+      "name": "Challenge Name",
+      "creator": "user1",
+      "teams": [
+        "team1",
+        "team2",
+        "team3"
+      ],
+      "startTime": "2024-02-04T18:00:00.000Z"
+    }
+  ],
+  "teams": [
+    {
+      "id": "team1",
+      "name": "Team 1",
+      "position": 3,
+      "users": [
+        "user1"
+      ]
+    },
+    {
+      "id": "team2",
+      "name": "Team 2",
+      "position": 1,
+      "users": [
+        "user2"
+      ]
+    },
+    {
+      "id": "team3",
+      "name": "Team 3",
+      "position": 2,
+      "users": [
+        "user3"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": "user1",
+      "email": "test@test.com",
+      "name": "test",
+      "password": "test",
+      "isCreator": true,
+      "createdId": "challenge1",
+      "participantId": "challenge1",
+      "isFitbitIntegrated": true
+    },
+    {
+      "id": "user2",
+      "email": "test1@test.com",
+      "name": "test1",
+      "password": "test",
+      "participantId": "challenge1",
+      "isFitbitIntegrated": true
+    },
+    {
+      "id": "user3",
+      "email": "test3@test.com",
+      "name": "test3",
+      "password": "test",
+      "participantId": "challenge1",
+      "isFitbitIntegrated": false
+    },
+    {
+      "id": "user5",
+      "email": "test5@test.com",
+      "name": "test5",
+      "password": "test",
+      "isCreator": true,
+      "isFitbitIntegrated": false
+    }
+  ],
+  "fitbitDetails": {
+    "clientId": "23RNL8",
+    "codeChallenge": "pQgSBsfD_S2HqKLsRolDFljd5ECIgerjRM9Izlkqv5w",
+    "generatedState": "442x6y58162d1q2l4h556j4q275t531q"
+  }
 }

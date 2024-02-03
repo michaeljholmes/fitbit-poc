@@ -1,43 +1,61 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, CircularProgress, Stack, Typography } from "@mui/material";
 import { rem } from "polished";
-import { useOutletContext, useSearchParams } from "react-router-dom";
+import { useLocation, useOutletContext, useSearchParams } from "react-router-dom";
 import { useAsync } from "react-use";
 import { OutletContext } from "../../routing/Template";
+import { useConnectToFitbit } from "../../api/hooks/fitbit/useConnectToFitbit";
+import { useDisconnectFromFitbit } from "../../api/hooks/fitbit/useDisconnectFromFitbit";
+import { useFititDetails } from "../../api/hooks/fitbit/useFitbitDetails";
+import { useMemo } from "react";
 
-const clientId = "23RNL8";
-const codeChallenge = "pQgSBsfD_S2HqKLsRolDFljd5ECIgerjRM9Izlkqv5w";
-const generatedState = "442x6y58162d1q2l4h556j4q275t531q";
-
-const authLink = `https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=${clientId}&scope=activity&
-code_challenge=${codeChallenge}&code_challenge_method=S256&state=${generatedState}&redirect_uri=http%3A%2F%2Flocalhost%3A5174%2Ffitbit`;
+const redirectUrl = 'http%3A%2F%2Flocalhost%3A5173%2Fdashboard%2Ftracker';
 
 export const FitBitIntegration = () => {
 
     const { user } = useOutletContext<OutletContext>();
     const { isFitbitIntegrated} = user;
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const connectToFitbit = useConnectToFitbit();
+    const disconnectFromFitbit = useDisconnectFromFitbit();
+    const {data: fitbitDetails} = useFititDetails();
+
+    const authLink = useMemo(() => {
+        if (fitbitDetails) {
+            const {clientId, codeChallenge, generatedState} = fitbitDetails;
+            return `https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=${clientId}&scope=activity&
+                code_challenge=${codeChallenge}&code_challenge_method=S256&state=${generatedState}&redirect_uri=${redirectUrl}`;
+        }
+    }, [fitbitDetails])
 
     //Validate user server side, trigger refetching user
     useAsync(async () => {
       const code = searchParams.get("code");
       const state = searchParams.get("state");
+      if (!fitbitDetails) return;
+      const {generatedState} = fitbitDetails;
       if (state !== generatedState) {
         return;
       }
       if (!code) return;
       try {
-        // API CALL
+        searchParams.delete('code');
+        searchParams.delete('state');
+        setSearchParams(searchParams);
+        await connectToFitbit.mutateAsync({code, state});
       } catch (e) {
-        console.log(e);
+        // Probably use toast notifications for errors
         return undefined;
       }
-    }, [searchParams]);
+    }, [searchParams, fitbitDetails]);
 
     // Revoke token server side, trigger refetching user
-    const revokeUser = () => {
-        console.log("REVOKE USER")
+    const revokeUser = async () => {
+        try {
+            await disconnectFromFitbit.mutateAsync();
+        } catch (e){
+            console.log(e);
+        }
     }
-
     
     if(isFitbitIntegrated) {
         return(
@@ -61,13 +79,16 @@ export const FitBitIntegration = () => {
             <Typography>
                 If you already own a fitbit, simply click the 'integrate' button below
             </Typography>
-            <Button
-                onClick={() => {
-                    window.location.href = authLink;
-                }}
-                >
-                Integrate
-            </Button>
+            {authLink ?
+                <Button
+                    onClick={() => {
+                        window.location.href = authLink;
+                    }}
+                    >
+                    Integrate
+                </Button> :
+                <CircularProgress/>
+            }
             <Typography variant="h3">
                 New to Fitbit?
             </Typography>
