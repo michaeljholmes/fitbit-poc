@@ -1,3 +1,4 @@
+import { api } from "..";
 import { Paged } from "../../types";
 import { Team, User } from "../api.types";
 
@@ -6,7 +7,7 @@ export const fetchTeams = async (
     pageSize: number,
     page: number
     ): Promise<Paged<Team>> => {
-    const totalReponse = await fetch(`${URL}teams?_page=${page + 1}&_limit=${pageSize}`);
+    const totalReponse = await fetch(`${api}/teams?_page=${page + 1}&_limit=${pageSize}`);
     const teams: Team[] = await totalReponse.json();
     return {
       items: teams,
@@ -18,7 +19,7 @@ export const fetchTeams = async (
 
   export const fetchTeam = async (teamIds: string[]): Promise<User[]> => {
     try {
-      const response = await fetch(`${URL}users`);
+      const response = await fetch(`${api}/users`);
       const users: User[] = await response.json();
       const teamMembers = users.filter(({ id }) =>
         teamIds.some((mid) => mid === id),
