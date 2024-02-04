@@ -1,52 +1,15 @@
 import { useQuery } from "react-query";
-import { Paged } from "../../types";
 import { Leaderbaord } from "../../components/Leaderboard";
 import { useState } from "react";
 import { TeamSummary } from "../../components/TeamSummary";
-import { Stack, Box, Typography, Button } from "@mui/material";
-import { Challenge, Team, User } from "../../api/api.types";
-import { rem } from "polished";
-import { useNavigate } from "react-router";
+import { Stack, Box, Typography } from "@mui/material";
 import { isFuture, parseISO } from "date-fns";
-
-const URL = "http://localhost:6789/";
-
-// These fetches have been modified to work with the mock server I have
-const fetchChallenge = async (challengeId: string):Promise<Challenge> => {
-  const challenge = await fetch(
-    `${URL}challenges?${challengeId}`,
-  );
-  return challenge.json();
-}
-
-// For now, will assume it get paged teams
-const fetchTeams = async (
-  pageSize: number,
-  page: number,
-  challengeId: string
-): Promise<Paged<Team>> => {
-  const totalReponse = await fetch(`${URL}teams?_page=${page + 1}&_limit=${pageSize}`);
-  const teams: Team[] = await totalReponse.json();
-  return {
-    items: teams,
-    pageSize,
-    page,
-    totalItems: 3,
-  };
-};
-
-const fetchTeam = async (teamIds: string[]): Promise<User[]> => {
-  try {
-    const response = await fetch(`${URL}users`);
-    const users: User[] = await response.json();
-    const teamMembers = users.filter(({ id }) =>
-      teamIds.some((mid) => mid === id),
-    );
-    return teamMembers;
-  } catch (e) {
-    return [];
-  }
-};
+import Countdown from "react-countdown";
+import { NotFitbitIntegrated } from "../../components/NotFitbitIntegrated";
+import { useChallenge } from "../../api/hooks/useChallenge";
+import { fetchTeams } from "../../api/requests/teamRequests";
+import { useTeam } from "../../api/hooks/useTeam";
+import { Team, User } from "../../api/api.types";
 
 interface ChallengeProps {
   user: User;
@@ -62,20 +25,18 @@ export const ChallengePage = ({
   const [pageSize, setPageSize] = useState(2);
   const [page, setPage] = useState(0);
   const isNotFitbitEnabled = !user.isFitbitIntegrated;
-  const navigate = useNavigate();
 
-  const { isLoading: isChallengeLoading, data: challenge } = useQuery({
-    queryKey: ["challenge", challengeId],
-    queryFn: () => fetchChallenge(challengeId),
-  });
+  console.log("PROCESS ", process.env.NODE_ENV);
+
+  const { isLoading: isChallengeLoading, data: challenge } = useChallenge(challengeId);
 
   const [selectedTeam, setSelectedTeam] = useState<Team | undefined>();
 
   const { isLoading: isTeamsLoading, data: teams } = useQuery({
-    queryKey: ["teams", pageSize, page, challengeId],
-    queryFn: () => fetchTeams(pageSize, page, challengeId),
+    queryKey: ["teams", pageSize, page],
+    queryFn: () => fetchTeams(pageSize, page),
     onSuccess: (teams) => {
-      setSelectedTeam(teams.items[0])
+      setSelectedTeam(teams.items[0]);
     },
     enabled: Boolean(challenge)
   });
@@ -84,11 +45,7 @@ export const ChallengePage = ({
     undefined,
   );
 
-  const { data: teamMembers } = useQuery({
-    queryKey: ["team", selectedTeam],
-    queryFn: () => fetchTeam(selectedTeam?.users ?? []),
-    enabled: Boolean(selectedTeam),
-  });
+  const { data: teamMembers } = useTeam(selectedTeam);
 
   const onSelectedRow = async (row: string[]) => {
     setSelectedRowId(row);
@@ -98,14 +55,19 @@ export const ChallengePage = ({
     }
   };
 
+  if(challenge?.startTime && isFuture(parseISO(challenge.startTime))){
+    return (
+      <>
+        {isNotFitbitEnabled && <NotFitbitIntegrated />}
+        <Typography>You challenge starts soon!!</Typography>
+        <Countdown date={challenge.startTime} />
+      </>
+    )
+  }
+
   return (
     <Stack sx={{ height: "100%", backgroundColor: "#ECF0F1" }}>
-      {isNotFitbitEnabled && 
-        <Stack alignItems={"center"} sx={{m: 1}}>
-          <Typography textAlign="center" variant="h2">You must connect Stridewars with fitbit before we can track your steps!</Typography>
-          <Typography textAlign="center" variant="h3">Its easy to set up and totally free. Haven't got a fitbit, not to worry, you can use your phone, with the Fitbit app to count your steps.</Typography>
-          <Button sx={{m: 1, width: rem(250)}} onClick={() => navigate("tracker")} variant="outlined">Click here to get set up!</Button>
-        </Stack>}
+      {isNotFitbitEnabled && <NotFitbitIntegrated />}
       <Stack sx={{flex: 1, position: "relative"}}>
         <Box sx={{...(isNotFitbitEnabled && {position: "absolute", backgroundColor: "black", flex: 1, width: "100%", height: "100%", opacity: 0.5, zIndex: 2})}}/>
         <Stack flexDirection={"row"} sx={{ p: 4}}>
