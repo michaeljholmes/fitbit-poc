@@ -6,17 +6,17 @@ import { OutletContext } from "../../routing/Template";
 export const DashboardPage = () => {
 
     const { user } = useOutletContext<OutletContext>();
-    const {isCreator, createdId, participantId} = user;
+    const {isCreator, createdId, challengeId} = user;
 
-    if(participantId) {
+    if(challengeId) {
         return (
-            <ChallengePage user={user} challengeId={participantId} />
+            <ChallengePage user={user} challengeId={challengeId} />
         )
     }
 
     if(isCreator){
         if(!createdId) {
-            return <CreateChallenge />
+            return <CreateChallenge user={user}/>
         }
     }
     

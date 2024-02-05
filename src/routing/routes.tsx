@@ -15,9 +15,9 @@ export const routes: Route[] = [
     icon: <TimelineOutlined />,
     text: "Tracker",
   },
-  {
-    to: "/dashboard/admin",
-    icon: <SettingIcon />,
-    text: "Admin",
-  },
+  // {
+  //   to: "/dashboard/admin",
+  //   icon: <SettingIcon />,
+  //   text: "Admin",
+  // },
 ];

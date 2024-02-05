@@ -1,3 +1,7 @@
+Current
+ - Remove Manual team creation text
+ - Add production registration and configure
+
 Post IMVP
 - Tidy up create challenge form validation
 

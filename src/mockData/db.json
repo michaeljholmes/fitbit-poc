@@ -55,7 +55,7 @@
       "email": "test1@test.com",
       "name": "test1",
       "password": "test",
-      "participantId": "challenge1",
+      "challengeId": "challenge1",
       "isFitbitIntegrated": true
     },
     {
@@ -63,7 +63,7 @@
       "email": "test3@test.com",
       "name": "test3",
       "password": "test",
-      "participantId": "challenge1",
+      "challengeId": "challenge1",
       "isFitbitIntegrated": false
     },
     {
@@ -73,6 +73,13 @@
       "password": "test",
       "isCreator": true,
       "isFitbitIntegrated": false
+    },
+    {
+      "id": "user5",
+      "email": "test@test.com",
+      "name": "test",
+      "password": "test",
+      "isCreator": true
     }
   ],
   "fitbitDetails": {

@@ -3,22 +3,22 @@ import { CreateChallengeForm } from "../../form/CreateChallengeForm";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useState, SyntheticEvent } from "react";
 import { CreateTeam } from "../../form/CreateTeam";
+import { useGenerateTeamLink } from "../../api/hooks/teams/useGenerateTeamLink";
+import { User } from "../../api/api.types";
 
-export const CreateChallenge = () => {
+interface CreateChallengeProps {
+    user: User;
+}
+
+export const CreateChallenge = ({user: {id}}: CreateChallengeProps) => {
 
     const [value, setValue] = useState("1");
-    const [generatedLink, setGeneratedLink] = useState<string | undefined>();
 
     const handleChange = (event: SyntheticEvent, newValue: string) => {
       setValue(newValue);
     };
 
-    const generateLink = () => {
-        setGeneratedLink("www.stridewars.com/join-challenge/ijwehf7834fh");
-    }
-
-    console.log(generateLink, Boolean(generatedLink))
-    
+    const { data: generatedLink } = useGenerateTeamLink(id);
     const hasGeneratedLink = Boolean(generatedLink);
 
     return (
@@ -48,7 +48,17 @@ export const CreateChallenge = () => {
                     </Typography>
                 </li>
             </ul>
-            <TabContext value={value}>
+            {hasGeneratedLink && 
+                <>
+                    <Typography>Click the link to copy it.</Typography>
+                    <Tooltip title={`Click to copy link`}>
+                        <ButtonBase onClick={() => {navigator.clipboard.writeText(generatedLink as string)}}>
+                            <Typography sx={{color: "red", textDecoration: "underline"}}>{generatedLink}</Typography>
+                        </ButtonBase>
+                    </Tooltip>
+                </>
+            }
+            {/* <TabContext value={value}>
                 <TabList onChange={handleChange} >
                     <Tab label={`Manually Create Team`} value="1" disabled={hasGeneratedLink} sx={{...(hasGeneratedLink && {cursor: "not-allowed"})}}/>
                     <Tab label={`Automatic Team Creation`} value="2" />
@@ -69,7 +79,7 @@ export const CreateChallenge = () => {
                             </Tooltip>
                         </>}
                 </TabPanel>
-            </TabContext>
+            </TabContext> */}
         </>
     );
 }

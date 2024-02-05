@@ -4,7 +4,7 @@ export interface User {
     name: string,
     isCreator: boolean,
     createdId?: string,
-    participantId?: string;
+    challengeId?: string;
     isFitbitIntegrated: boolean;
   }
 
@@ -12,7 +12,7 @@ export interface User {
     id: string;
     name: string;
     creator: string;
-    users: string[];
+    teams: Team[];
     startTime: string;
   }
 

@@ -6,7 +6,7 @@ export const useUser = (): UseQueryResult<User> => {
 
     // TBD
     const isLoggedIn = true; 
-    const currentUserId = "user1";
+    const currentUserId = "user5";
 
     return useQuery({
       queryKey: ["getUserById", isLoggedIn],

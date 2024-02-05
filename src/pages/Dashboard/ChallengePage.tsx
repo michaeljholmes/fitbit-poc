@@ -7,8 +7,8 @@ import { isFuture, parseISO } from "date-fns";
 import Countdown from "react-countdown";
 import { NotFitbitIntegrated } from "../../components/NotFitbitIntegrated";
 import { useChallenge } from "../../api/hooks/useChallenge";
-import { fetchTeams } from "../../api/requests/teamRequests";
-import { useTeam } from "../../api/hooks/useTeam";
+import { fetchChallengeTeams } from "../../api/requests/challengeRequests";
+import { useTeam } from "../../api/hooks/teams/useTeam";
 import { Team, User } from "../../api/api.types";
 
 interface ChallengeProps {
@@ -34,7 +34,7 @@ export const ChallengePage = ({
 
   const { isLoading: isTeamsLoading, data: teams } = useQuery({
     queryKey: ["teams", pageSize, page],
-    queryFn: () => fetchTeams(pageSize, page),
+    queryFn: () => fetchChallengeTeams(pageSize, page),
     onSuccess: (teams) => {
       setSelectedTeam(teams.items[0]);
     },

@@ -1,21 +1,5 @@
 import { api } from "..";
-import { Paged } from "../../types";
 import { Team, User } from "../api.types";
-
-// For now, will assume it get paged teams
-export const fetchTeams = async (
-    pageSize: number,
-    page: number
-    ): Promise<Paged<Team>> => {
-    const totalReponse = await fetch(`${api}/teams?_page=${page + 1}&_limit=${pageSize}`);
-    const teams: Team[] = await totalReponse.json();
-    return {
-      items: teams,
-      pageSize,
-      page,
-      totalItems: 3,
-    };
-  };
 
   export const fetchTeam = async (teamIds: string[]): Promise<User[]> => {
     try {
