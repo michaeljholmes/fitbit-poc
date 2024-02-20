@@ -53,7 +53,7 @@ export const fetchChallengeTeams = async (
   export const getChallengeGenerationLink = async (userId: string): Promise<string> => {
     try {
       return new Promise((resolve) => {
-        resolve(`localhost:5173/join-challenge?challengeId=challenge1`)
+        resolve(`${import.meta.env.VITE_URL}/join-challenge?challengeId=challenge1`)
       })
     } catch (e) {
       return "";

@@ -9,8 +9,8 @@
         "team2",
         "team3"
       ],
-      "startTime": "2024-02-04T18:00:00.000Z",
-      "endTime": "2024-02-08T18:00:00.000Z"
+      "startTime": "2024-02-25T18:00:00.000Z",
+      "endTime": "2024-02-28T18:00:00.000Z"
     }
   ],
   "teams": [
@@ -47,7 +47,7 @@
       "password": "test",
       "isCreator": true,
       "createdId": "challenge1",
-      "participantId": "challenge1",
+      "challengeId": "challenge1",
       "isFitbitIntegrated": true
     },
     {
