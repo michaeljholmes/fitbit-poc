@@ -1,8 +1,9 @@
 import { Stack } from "@mui/material";
 import { NavBarProps } from ".";
 import { NavMenuLink } from "./NavMenuLink";
+import { SignOutButton } from "../../components/SignOutButton";
 
-export const DesktopNavBar = ({ onLinkClick, routes }: NavBarProps) => {
+export const DesktopNavBar = ({ onLinkClick, routes, signOut }: NavBarProps) => {
   return (
     <Stack
       alignItems={"center"}
@@ -17,6 +18,7 @@ export const DesktopNavBar = ({ onLinkClick, routes }: NavBarProps) => {
           {icon}
         </NavMenuLink>
       ))}
+      <SignOutButton onSignout={signOut}/>
     </Stack>
   );
 };

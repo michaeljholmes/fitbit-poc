@@ -1,6 +1,7 @@
-import { Typography } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
+import { Button, Typography } from "@mui/material";
+import { Navigate, useSearchParams } from "react-router-dom";
 import { useChallenge } from "../api/hooks/useChallenge";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export const JoinChallengeViaLink = () => {
 
@@ -9,12 +10,18 @@ export const JoinChallengeViaLink = () => {
     const challengeId = searchParams.get('challengeId');
     const { data, isLoading } = useChallenge(challengeId ?? undefined);
 
-    if(isLoading){
+    const { isLoading: isAuth0Loading, isAuthenticated, loginWithRedirect } = useAuth0();
+
+    if(isLoading || isAuth0Loading){
         return <Typography>Loading...</Typography>
     }
     
     if(!data){
         return <Typography>No challenge found!</Typography>
+    }
+
+    if (isAuthenticated){
+        return <Navigate to={"/dashboard"}/>
     }
 
     return (
@@ -25,7 +32,10 @@ export const JoinChallengeViaLink = () => {
             <Typography variant="body1">
                 You been invited to join '{data.name}' challenge by '{data.creator}'. Sign up below.
             </Typography>  
-            TODO ADD FORM         
+            <Button 
+                variant="outlined" 
+                onClick={() => loginWithRedirect({authorizationParams: { screen_hint: "signup"}})}
+            >Sign up!</Button>       
         </>
     );
 }

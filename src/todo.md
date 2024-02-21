@@ -11,3 +11,6 @@ Thoughts
  - Prevent user from manually creating team, AND then trying to send out a link. This could be done by using a button to generate a link.
  - Enforce google sign in only?
 
+TODO
+ - Create user on successful sign up 
+

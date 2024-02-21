@@ -9,6 +9,7 @@ export interface Route {
 export interface NavBarProps {
   onLinkClick: () => void;
   routes: Route[];
+  signOut: () => void;
 }
 
 export * from "./MobileNavBar";
