@@ -4,7 +4,7 @@ import { useOutletContext } from "react-router-dom";
 import { OutletContext } from "../../routing/Template";
 import { Stack } from "@mui/material";
 
-console.log(import.meta.env.VITE_URL);
+console.log(import.meta.env);
 
 export const DashboardPage = () => {
 

@@ -3,8 +3,6 @@ import { Leaderbaord } from "../../components/Leaderboard";
 import { useMemo, useState } from "react";
 import { TeamSummary } from "../../components/TeamSummary";
 import { Stack, Box, Typography } from "@mui/material";
-import { isFuture, parseISO } from "date-fns";
-import Countdown from "react-countdown";
 import { NotFitbitIntegrated } from "../../components/NotFitbitIntegrated";
 import { useChallenge } from "../../api/hooks/useChallenge";
 import { fetchChallengeTeams } from "../../api/requests/challengeRequests";

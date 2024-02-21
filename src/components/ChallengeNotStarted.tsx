@@ -10,7 +10,7 @@ export const ChallengeNotStarted = ({challenge: {startTime}}: ChallengeNotStarte
     return (
         <>
             <Typography>You challenge starts soon!!</Typography>
-            <Countdown date={startTime} />
+            <Countdown date={startTime} onComplete={() => location.reload()}/>
         </>
     );
 }
