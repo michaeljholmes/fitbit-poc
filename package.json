@@ -15,6 +15,7 @@
     "format": "npm run prettier:fix && npm run lint:fix"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@hookform/error-message": "^2.0.1",

@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   CircularProgress,
   Drawer,
   IconButton,
@@ -17,6 +18,7 @@ import { routes } from "./routes";
 import { useIsDesktop } from "../hooks/breakpoint";
 import { useUser } from "../api/hooks/useUser";
 import { User } from "../api/api.types";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export interface OutletContext {
   user: User;
@@ -33,6 +35,14 @@ export const Template = () => {
   });
 
   const { data, isLoading } = useUser();
+
+  const { isLoading: isAuth0Loading, isAuthenticated, error, user, loginWithRedirect, logout } =
+    useAuth0();
+  console.log(isAuthenticated, user);
+
+  if(!isAuthenticated){
+    return ( <Button variant="outlined" onClick={() => loginWithRedirect()}>Log in</Button>);
+  }
 
   if(isLoading){
       return <Stack sx={{mt: 16}} alignItems={"center"}><CircularProgress /></Stack>;
