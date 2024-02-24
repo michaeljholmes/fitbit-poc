@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   CircularProgress,
   Drawer,
   IconButton,
@@ -17,6 +18,7 @@ import { routes } from "./routes";
 import { useIsDesktop } from "../hooks/breakpoint";
 import { useUser } from "../api/hooks/useUser";
 import { User } from "../api/api.types";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export interface OutletContext {
   user: User;
@@ -34,6 +36,11 @@ export const Template = () => {
 
   const { data, isLoading } = useUser();
 
+  const { isLoading: isAuth0Loading, isAuthenticated, error, user, loginWithRedirect, logout, } =
+    useAuth0();
+
+  const signOut = () => logout({logoutParams: {returnTo: import.meta.env.VITE_URL}})
+
   if(isLoading){
       return <Stack sx={{mt: 16}} alignItems={"center"}><CircularProgress /></Stack>;
   }
@@ -44,7 +51,7 @@ export const Template = () => {
 
   return isDesktop ? (
     <Stack sx={{ flex: 1 }} height={"100vh"} width={"100vw"}>
-      <DesktopNavBar onLinkClick={onLinkClick} routes={routes} />
+      <DesktopNavBar onLinkClick={onLinkClick} routes={routes} signOut={signOut}/>
       <Stack
         sx={{
           backgroundColor: "#E7EEF7",
@@ -90,7 +97,7 @@ export const Template = () => {
         open={isDrawerOpen}
         onClose={() => setIsDrawerOpen(false)}
       >
-        <MobileNavBar onLinkClick={onLinkClick} routes={routes} />
+        <MobileNavBar onLinkClick={onLinkClick} routes={routes} signOut={signOut}/>
       </Drawer>
     </Stack>
   );

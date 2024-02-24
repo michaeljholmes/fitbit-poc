@@ -8,7 +8,7 @@ import { useDisconnectFromFitbit } from "../../api/hooks/fitbit/useDisconnectFro
 import { useFititDetails } from "../../api/hooks/fitbit/useFitbitDetails";
 import { useMemo } from "react";
 
-const redirectUrl = 'http%3A%2F%2Flocalhost%3A5173%2Fdashboard%2Ftracker';
+const redirectUrl = encodeURIComponent(`${import.meta.env.VITE_URL}/dashboard/tracker`);
 
 export const FitBitIntegration = () => {
 

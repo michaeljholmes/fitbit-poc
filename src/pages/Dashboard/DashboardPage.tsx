@@ -1,7 +1,10 @@
-import { ChallengePage } from "./ChallengePage";
+import { Challenge } from "./Challenge";
 import { CreateChallenge } from "./CreateChallenge";
 import { useOutletContext } from "react-router-dom";
 import { OutletContext } from "../../routing/Template";
+import { Stack } from "@mui/material";
+
+console.log(import.meta.env);
 
 export const DashboardPage = () => {
 
@@ -10,15 +13,16 @@ export const DashboardPage = () => {
 
     if(challengeId) {
         return (
-            <ChallengePage user={user} challengeId={challengeId} />
+            <Challenge user={user} challengeId={challengeId} />
         )
     }
 
-    if(isCreator){
-        if(!createdId) {
-            return <CreateChallenge user={user}/>
-        }
-    }
+    // TODO - add in when user can create challenge
+    // if(isCreator){
+    //     if(!createdId) {
+    //         return <CreateChallenge user={user}/>
+    //     }
+    // }
     
     return (
         <p>

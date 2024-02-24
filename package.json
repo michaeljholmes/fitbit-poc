@@ -3,7 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "start": "vite",
+    "start": "vite --mode production",
+    "start-dev": "vite",
     "build": "tsc && vite build -d",
     "preview": "vite preview",
     "server": "json-server --watch ./src/mockData/db.json --port 6789",
@@ -14,6 +15,7 @@
     "format": "npm run prettier:fix && npm run lint:fix"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
     "@hookform/error-message": "^2.0.1",
@@ -43,6 +45,7 @@
     "@typescript-eslint/eslint-plugin": "^6.14.0",
     "@typescript-eslint/parser": "^6.14.0",
     "@vitejs/plugin-react": "^2.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.55.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",

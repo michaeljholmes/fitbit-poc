@@ -9,8 +9,8 @@
         "team2",
         "team3"
       ],
-      "startTime": "2024-02-04T18:00:00.000Z",
-      "endTime": "2024-02-08T18:00:00.000Z"
+      "startTime": "2024-02-20T18:00:00.000Z",
+      "endTime": "2024-02-28T18:00:00.000Z"
     }
   ],
   "teams": [
@@ -47,7 +47,7 @@
       "password": "test",
       "isCreator": true,
       "createdId": "challenge1",
-      "participantId": "challenge1",
+      "challengeId": "challenge1",
       "isFitbitIntegrated": true
     },
     {
@@ -86,5 +86,10 @@
     "clientId": "23RNL8",
     "codeChallenge": "pQgSBsfD_S2HqKLsRolDFljd5ECIgerjRM9Izlkqv5w",
     "generatedState": "442x6y58162d1q2l4h556j4q275t531q"
+  },
+  "fitbitDetailsProd": {
+    "clientId": "23RVBM",
+    "codeChallenge": "cKq-NsUtGev5Ib-osU9HOgmTM10fuaWNeiBKUI2aEfQ",
+    "generatedState": "0a0w5e5p2q5c5j4s0m0f4q591n266o2y"
   }
 }
