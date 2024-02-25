@@ -4,11 +4,11 @@ export interface User {
     name: string,
     isCreator: boolean,
     createdId?: string,
-    challengeId?: string;
+    competitionId?: string;
     isFitbitIntegrated: boolean;
   }
 
-  export interface Challenge {
+  export interface Competition {
     id: string;
     name: string;
     creator: string;

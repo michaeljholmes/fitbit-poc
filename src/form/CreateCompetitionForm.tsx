@@ -13,11 +13,10 @@ import { CreateTeam, Team } from "./CreateTeam";
 import { useState, SyntheticEvent } from "react";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 
-interface Challenge {
-  challenge: string;
+interface Competition {
+  competition: string;
   teams: Team[];
 }
-
 
 const minimumTeams = 2;
 const maxTotal = 4;
@@ -40,8 +39,8 @@ const teamSchema = yup.object({
 });
 
 
-const challengeSchema = yup.object({
-  challenge: yup.string().required("Required").max(50, "50 character limit"),
+const competitionSchema = yup.object({
+  competition: yup.string().required("Required").max(50, "50 character limit"),
   teams: yup
     .array()
     .of(teamSchema)
@@ -49,18 +48,18 @@ const challengeSchema = yup.object({
     .required()
 });
 
-export const CreateChallengeForm = () => {
-  const { handleSubmit, control, watch, formState: {errors, touchedFields}, getValues} = useForm<Challenge>({
+export const CreateCompetitionForm = () => {
+  const { handleSubmit, control, watch, formState: {errors, touchedFields}, getValues} = useForm<Competition>({
     mode: "all",
     defaultValues: {
-      challenge: "",
+      competition: "",
       teams: [],
     },
-    resolver: yupResolver(challengeSchema),
+    resolver: yupResolver(competitionSchema),
   });
 
 
-  const onSubmit: SubmitHandler<Challenge> = (data) => {
+  const onSubmit: SubmitHandler<Competition> = (data) => {
     console.log("SUBMITTED");
     console.log(data);
   };
@@ -94,14 +93,14 @@ export const CreateChallengeForm = () => {
       <Typography>Create your team</Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
-          name="challenge"
+          name="competition"
           control={control}
           render={({ field, fieldState }) => {
             return (
               <TextField
                 sx={{ m: 1 }}
                 size="small"
-                label="Challenge name"
+                label="Competition name"
                 variant="outlined"
                 {...field}
                 error={Boolean(fieldState.error)}

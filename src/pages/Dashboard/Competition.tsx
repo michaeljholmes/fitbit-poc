@@ -4,45 +4,45 @@ import { useMemo, useState } from "react";
 import { TeamSummary } from "../../components/TeamSummary";
 import { Stack, Box, Typography } from "@mui/material";
 import { NotFitbitIntegrated } from "../../components/NotFitbitIntegrated";
-import { useChallenge } from "../../api/hooks/useChallenge";
-import { fetchChallengeTeams } from "../../api/requests/challengeRequests";
+import { useCompetition } from "../../api/hooks/useCompetition";
+import { fetchCompetitionTeams } from "../../api/requests/competitionRequests";
 import { useTeam } from "../../api/hooks/teams/useTeam";
 import { Team, User } from "../../api/api.types";
 import { isDateInFuture } from "../../utils/isDateInFuture";
 import { IsCreator } from "../../components/IsCreator";
-import { ChallengeNotStarted } from "../../components/ChallengeNotStarted";
+import { CompetitionNotStarted } from "../../components/CompetitionNotStarted";
 
-interface ChallengeProps {
+interface CompetitionProps {
   user: User;
-  challengeId: string;
+  competitionId: string;
 }
 
 // Initially just show winning team
 
-export const Challenge = ({
-  challengeId,
+export const Competition = ({
+  competitionId,
   user: {
     isFitbitIntegrated,
     isCreator
   }
-}: ChallengeProps) => {
+}: CompetitionProps) => {
   const [pageSize, setPageSize] = useState(2);
   const [page, setPage] = useState(0);
   const isNotFitbitEnabled = !isFitbitIntegrated;
 
-  const { isLoading: isChallengeLoading, data: challenge } = useChallenge(challengeId);
-  const isChallengeInFuture = useMemo(() => 
-    challenge?.startTime ? isDateInFuture(challenge.startTime): false, [challenge]);
+  const { isLoading: isCompetitionLoading, data: competition } = useCompetition(competitionId);
+  const isCompetitionInFuture = useMemo(() => 
+  competition?.startTime ? isDateInFuture(competition.startTime): false, [competition]);
 
   const [selectedTeam, setSelectedTeam] = useState<Team | undefined>();
 
   const { isLoading: isTeamsLoading, data: teams } = useQuery({
     queryKey: ["teams", pageSize, page],
-    queryFn: () => fetchChallengeTeams(challenge?.id!, pageSize, page),
+    queryFn: () => fetchCompetitionTeams(competition?.id!, pageSize, page),
     onSuccess: (teams) => {
       setSelectedTeam(teams.items[0]);
     },
-    enabled: Boolean(challenge)
+    enabled: Boolean(competition)
   });
   console.log(teams)
 
@@ -60,20 +60,20 @@ export const Challenge = ({
     }
   };
 
-  if(isChallengeLoading){
+  if(isCompetitionLoading){
     return <Typography>Loading...</Typography>
   }
 
-  if(!challenge){
-    return <Typography>No challenge found</Typography>
+  if(!competition){
+    return <Typography>No competition found</Typography>
   }
 
   return (
     <Stack sx={{ height: "100%", backgroundColor: "#ECF0F1", p: 2}}>
-      {isCreator && isChallengeInFuture && <IsCreator sx={{mb: 2}} challengeId={challengeId} />}
+      {isCreator && isCompetitionInFuture && <IsCreator sx={{mb: 2}} competitionId={competitionId} />}
       {isNotFitbitEnabled && <NotFitbitIntegrated />}
-      {isChallengeInFuture ?
-        <ChallengeNotStarted challenge={challenge}/>
+      {isCompetitionInFuture ?
+        <CompetitionNotStarted competition={competition}/>
         :
         <Stack sx={{flex: 1, position: "relative"}}>
           <Box sx={{...(isNotFitbitEnabled && {position: "absolute", backgroundColor: "black", flex: 1, width: "100%", height: "100%", opacity: 0.5, zIndex: 2})}}/>
@@ -92,7 +92,7 @@ export const Challenge = ({
               pageSizeOptions={[2, 4, 6]}
               rowSelectionModel={selectedRowId}
               setRowSelectionModel={onSelectedRow}
-              isLoading={isChallengeLoading || isTeamsLoading}
+              isLoading={isCompetitionLoading || isTeamsLoading}
             />
           </Stack>
         </Stack>

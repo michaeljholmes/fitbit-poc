@@ -1,15 +1,15 @@
 import { api } from "..";
 import { Paged } from "../../types";
-import { Challenge, Team, User } from "../api.types";
+import { Competition, Team, User } from "../api.types";
 import { getCompetitionEndpoint, getCompetitionTeamsEndpoint, getTeamMembersEndpoint } from "./endpoints";
 const isProduction = import.meta.env.MODE === "production";
 
-export const fetchChallenge = async (competitionId: string):Promise<Challenge> => {
-    const challengeResponse = await fetch(getCompetitionEndpoint(competitionId));
-    return await challengeResponse.json();
+export const fetchCompetition = async (competitionId: string):Promise<Competition> => {
+    const competitionResponse = await fetch(getCompetitionEndpoint(competitionId));
+    return await competitionResponse.json();
   }
 
-  export const fetchChallengeMembers = async (challengeId: string):Promise<User[]> => {
+  export const fetchCompetitionMembers = async (competitionId: string):Promise<User[]> => {
     const result = await fetch(
       `${api}/users`,
     );
@@ -18,7 +18,7 @@ export const fetchChallenge = async (competitionId: string):Promise<Challenge> =
 
   // For now, will assume it get paged teams
   // TODO PAGING TO CONSIDE
-export const fetchChallengeTeams = async (
+export const fetchCompetitionTeams = async (
   competitionId: string,
   pageSize: number,
   page: number
@@ -51,9 +51,9 @@ export const fetchChallengeTeams = async (
 
 
   // Join team could likly be a patch to update the team and the users team... 
-  export const joinChallenge = async (challengeId: string, name: string): Promise<Team | undefined> => {
+  export const joinCompetition = async (competitionId: string, name: string): Promise<Team | undefined> => {
     try {
-    const team = await fetch(`${api}/challenge/${challengeId}`, {
+    const team = await fetch(`${api}/competition/${competitionId}`, {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
@@ -68,10 +68,10 @@ export const fetchChallengeTeams = async (
 };
 
   // Unsure as to what the backend might need to generate the link
-  export const getChallengeGenerationLink = async (userId: string): Promise<string> => {
+  export const getCompetitionGenerationLink = async (userId: string): Promise<string> => {
     try {
       return new Promise((resolve) => {
-        resolve(`${import.meta.env.VITE_URL}/join-challenge?challengeId=challenge1`)
+        resolve(`${import.meta.env.VITE_URL}/join-competition?competitionId=competitionId`)
       })
     } catch (e) {
       return "";

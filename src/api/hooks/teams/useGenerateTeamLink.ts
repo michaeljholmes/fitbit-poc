@@ -1,5 +1,5 @@
 import { UseQueryResult, useQuery } from "react-query";
-import { getChallengeGenerationLink } from "../../requests/challengeRequests";
+import { getCompetitionGenerationLink } from "../../requests/competitionRequests";
 
 export const useGenerateTeamLink = (userId: string): UseQueryResult<string> => {
 
@@ -8,7 +8,7 @@ export const useGenerateTeamLink = (userId: string): UseQueryResult<string> => {
 
     return useQuery({
       queryKey: ["getTeamGenerationLink", isLoggedIn],
-      queryFn: () => getChallengeGenerationLink(userId),
+      queryFn: () => getCompetitionGenerationLink(userId),
       enabled: Boolean(isLoggedIn)
     });
 }

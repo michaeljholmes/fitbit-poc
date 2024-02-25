@@ -3,7 +3,7 @@ const isProduction = import.meta.env.MODE === "production";
 export const getCompetitionEndpoint = (competitionId: string) => 
     isProduction ? `${import.meta.env.VITE_API}/api/competition/${competitionId}` :
     `${import.meta.env.VITE_API}/competitions/${competitionId}`;
-// Get competition teams for given challenge
+// Get competition teams for given competitio
 export const getCompetitionTeamsEndpoint = (competitionId: string) => 
     isProduction ? `${import.meta.env.VITE_API}/api/competition/teams/${competitionId}` :
     `${import.meta.env.VITE_API}/competitionTeams/${competitionId}`;  

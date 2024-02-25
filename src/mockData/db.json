@@ -1,8 +1,8 @@
 {
   "competitions": [
     {
-      "id": "challenge1",
-      "name": "Challenge Name",
+      "id": "competition1",
+      "name": "Competition Name",
       "creator": "user1",
       "startTime": "2024-02-20T18:00:00.000Z",
       "endTime": "2024-02-28T18:00:00.000Z"
@@ -10,7 +10,7 @@
   ],
   "competitionTeams": [
     {
-      "id": "challenge1",
+      "id": "competition1",
       "teams": [
         "team1",
         "team2",
@@ -51,8 +51,8 @@
       "name": "test",
       "password": "test",
       "isCreator": true,
-      "createdId": "challenge1",
-      "challengeId": "challenge1",
+      "createdId": "competition1",
+      "competitionId": "competition1",
       "isFitbitIntegrated": true
     },
     {
@@ -60,7 +60,7 @@
       "email": "test1@test.com",
       "name": "test1",
       "password": "test",
-      "challengeId": "challenge1",
+      "competitionId": "competition1",
       "isFitbitIntegrated": true
     },
     {
@@ -68,7 +68,7 @@
       "email": "test3@test.com",
       "name": "test3",
       "password": "test",
-      "challengeId": "challenge1",
+      "competitionId": "competition1",
       "isFitbitIntegrated": false
     },
     {

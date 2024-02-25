@@ -1,10 +1,10 @@
 IMVP
- - When is the challenge actually created? We'll start by fixing start time.
- - Is the creator in the challenge? Do we need toggle?
+ - When is the competition actually created? We'll start by fixing start time.
+ - Is the creator in the competition? Do we need toggle?
  - Need to show what happens at the end!
 
 Post IMVP
-- Tidy up create challenge form validation
+- Tidy up create competition form validation
 
 Thoughts
  - Should we show the teams with the countdown?
