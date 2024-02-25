@@ -1,12 +1,12 @@
 import { api } from "..";
 import { Paged } from "../../types";
 import { Challenge, Team, User } from "../api.types";
+import { getCompetitionEndpoint, getCompetitionTeamsEndpoint, getTeamMembersEndpoint } from "./endpoints";
+const isProduction = import.meta.env.MODE === "production";
 
-export const fetchChallenge = async (challengeId: string):Promise<Challenge> => {
-    const challenge = await fetch(
-      `${api}/challenges/${challengeId}`,
-    );
-    return challenge.json();
+export const fetchChallenge = async (competitionId: string):Promise<Challenge> => {
+    const challengeResponse = await fetch(getCompetitionEndpoint(competitionId));
+    return await challengeResponse.json();
   }
 
   export const fetchChallengeMembers = async (challengeId: string):Promise<User[]> => {
@@ -17,12 +17,30 @@ export const fetchChallenge = async (challengeId: string):Promise<Challenge> => 
   }  
 
   // For now, will assume it get paged teams
+  // TODO PAGING TO CONSIDE
 export const fetchChallengeTeams = async (
+  competitionId: string,
   pageSize: number,
   page: number
   ): Promise<Paged<Team>> => {
-  const totalReponse = await fetch(`${api}/teams?_page=${page + 1}&_limit=${pageSize}`);
-  const teams: Team[] = await totalReponse.json();
+ //  const totalReponse = await fetch(`${api}/teams?_page=${page + 1}&_limit=${pageSize}`);
+  const teamIdsResponse = await fetch(getCompetitionTeamsEndpoint(competitionId));
+  const teamIdsResult =  await teamIdsResponse.json();
+  let teamIds = []; 
+  if(isProduction){
+    teamIds = teamIdsResult;
+  } else {
+    teamIds = teamIdsResult.teams
+  }
+  const teams: Team[] = await Promise.all(teamIds.map(async (teamId: string) => {
+    const teamIdsResponse =  await fetch(getTeamMembersEndpoint(teamId));
+    const members =  teamIdsResponse.json();
+    return {
+      id: teamId,
+      users: members,
+      name: teamId
+    }
+  }));
   return {
     items: teams,
     pageSize,

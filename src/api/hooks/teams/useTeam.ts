@@ -5,8 +5,8 @@ import { fetchTeam } from "../../requests/teamRequests";
 export const useTeam = (selectedTeam?: Team): UseQueryResult<User[]> => {
     return useQuery({
         queryKey: ["team", selectedTeam],
-        queryFn: () => fetchTeam(selectedTeam?.users ?? []),
-        enabled: Boolean(selectedTeam),
+        queryFn: () => fetchTeam(selectedTeam?.id!),
+        enabled: Boolean(selectedTeam?.id),
       });
 }
 

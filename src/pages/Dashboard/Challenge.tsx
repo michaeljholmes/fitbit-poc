@@ -38,12 +38,13 @@ export const Challenge = ({
 
   const { isLoading: isTeamsLoading, data: teams } = useQuery({
     queryKey: ["teams", pageSize, page],
-    queryFn: () => fetchChallengeTeams(pageSize, page),
+    queryFn: () => fetchChallengeTeams(challenge?.id!, pageSize, page),
     onSuccess: (teams) => {
       setSelectedTeam(teams.items[0]);
     },
     enabled: Boolean(challenge)
   });
+  console.log(teams)
 
   const [selectedRowId, setSelectedRowId] = useState<string[] | undefined>(
     undefined,

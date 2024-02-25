@@ -12,7 +12,7 @@ export interface User {
     id: string;
     name: string;
     creator: string;
-    teams: Team[];
+    // teams: Team[];
     startTime: string;
   }
 
