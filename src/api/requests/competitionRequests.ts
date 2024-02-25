@@ -24,23 +24,23 @@ export const fetchCompetitionTeams = async (
   page: number
   ): Promise<Paged<Team>> => {
  //  const totalReponse = await fetch(`${api}/teams?_page=${page + 1}&_limit=${pageSize}`);
-  const teamIdsResponse = await fetch(getCompetitionTeamsEndpoint(competitionId));
-  const teamIdsResult =  await teamIdsResponse.json();
-  let teamIds = []; 
+  const teamResponse = await fetch(getCompetitionTeamsEndpoint(competitionId));
+  const teamResult =  await teamResponse.json();
+  let teams = []; 
   if(isProduction){
-    teamIds = teamIdsResult;
+    teams = teamResult;
   } else {
-    teamIds = teamIdsResult.teams
+    teams = teamResult;
   }
-  const teams: Team[] = await Promise.all(teamIds.map(async (teamId: string) => {
-    const teamIdsResponse =  await fetch(getTeamMembersEndpoint(teamId));
-    const members =  teamIdsResponse.json();
-    return {
-      id: teamId,
-      users: members,
-      name: teamId
-    }
-  }));
+  // const teams: Team[] = await Promise.all(teamIds.map(async (teamId: string) => {
+  //   const teamIdsResponse =  await fetch(getTeamMembersEndpoint(teamId));
+  //   const members =  teamIdsResponse.json();
+  //   return {
+  //     id: teamId,
+  //     users: members,
+  //     name: teamId
+  //   }
+  // }));
   return {
     items: teams,
     pageSize,

@@ -3,19 +3,13 @@
     {
       "id": "competition1",
       "name": "Competition Name",
-      "creator": "user1",
+      "owner": {
+        "id": "user1",
+        "email": "test@test.com",
+        "username": "test"
+      },
       "startTime": "2024-02-20T18:00:00.000Z",
       "endTime": "2024-02-28T18:00:00.000Z"
-    }
-  ],
-  "competitionTeams": [
-    {
-      "id": "competition1",
-      "teams": [
-        "team1",
-        "team2",
-        "team3"
-      ]
     }
   ],
   "teams": [
@@ -24,7 +18,16 @@
       "name": "Team 1",
       "position": 3,
       "users": [
-        "user1"
+        {
+          "id": "user1",
+          "email": "test@test.com",
+          "username": "test"
+        },
+        {
+          "id": "user2",
+          "email": "test1@test.com",
+          "username": "test1"
+        }
       ]
     },
     {
@@ -32,7 +35,16 @@
       "name": "Team 2",
       "position": 1,
       "users": [
-        "user2"
+        {
+          "id": "user3",
+          "email": "test@test.com",
+          "username": "test3"
+        },
+        {
+          "id": "user4",
+          "email": "test1@test.com",
+          "username": "test4"
+        }
       ]
     },
     {
@@ -40,7 +52,11 @@
       "name": "Team 3",
       "position": 2,
       "users": [
-        "user3"
+        {
+          "id": "user5",
+          "email": "test5@test.com",
+          "username": "test5"
+        }
       ]
     }
   ],
@@ -48,7 +64,7 @@
     {
       "id": "user1",
       "email": "test@test.com",
-      "name": "test",
+      "username": "test",
       "password": "test",
       "isCreator": true,
       "createdId": "competition1",
@@ -58,7 +74,7 @@
     {
       "id": "user2",
       "email": "test1@test.com",
-      "name": "test1",
+      "username": "test1",
       "password": "test",
       "competitionId": "competition1",
       "isFitbitIntegrated": true
@@ -66,7 +82,7 @@
     {
       "id": "user3",
       "email": "test3@test.com",
-      "name": "test3",
+      "username": "test3",
       "password": "test",
       "competitionId": "competition1",
       "isFitbitIntegrated": false
@@ -74,7 +90,7 @@
     {
       "id": "user4",
       "email": "test4@test.com",
-      "name": "test4",
+      "username": "test4",
       "password": "test",
       "isCreator": true,
       "isFitbitIntegrated": false
@@ -82,7 +98,7 @@
     {
       "id": "user5",
       "email": "test5@test.com",
-      "name": "test5",
+      "username": "test5",
       "password": "test",
       "isCreator": true
     }

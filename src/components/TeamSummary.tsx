@@ -17,6 +17,7 @@ interface TeamSummaryProps {
 }
 
 export const TeamSummary = ({ users }: TeamSummaryProps) => {
+  console.log(users);
   return (
     <Stack sx={{ width: rem(300), zIndex: 1}}>
       <Stack
@@ -50,13 +51,13 @@ export const TeamSummary = ({ users }: TeamSummaryProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users?.map(({ name }) => (
+            {users?.map(({ id, username }) => (
               <TableRow
-                key={name}
+                key={id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {name}
+                  {username}
                 </TableCell>
                 <TableCell align="right">{"today"}</TableCell>
                 <TableCell align="right">{"total"}</TableCell>

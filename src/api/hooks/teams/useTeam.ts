@@ -1,8 +1,8 @@
 import { UseQueryResult, useQuery } from "react-query";
-import { Team, User } from "../../api.types";
+import { Team } from "../../api.types";
 import { fetchTeam } from "../../requests/teamRequests";
 
-export const useTeam = (selectedTeam?: Team): UseQueryResult<User[]> => {
+export const useTeam = (selectedTeam?: Team): UseQueryResult<Team> => {
     return useQuery({
         queryKey: ["team", selectedTeam],
         queryFn: () => fetchTeam(selectedTeam?.id!),

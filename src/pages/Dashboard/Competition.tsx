@@ -22,8 +22,7 @@ interface CompetitionProps {
 export const Competition = ({
   competitionId,
   user: {
-    isFitbitIntegrated,
-    isCreator
+    isFitbitIntegrated
   }
 }: CompetitionProps) => {
   const [pageSize, setPageSize] = useState(2);
@@ -50,7 +49,7 @@ export const Competition = ({
     undefined,
   );
 
-  const { data: teamMembers } = useTeam(selectedTeam);
+  const { data: team } = useTeam(selectedTeam);
 
   const onSelectedRow = async (row: string[]) => {
     setSelectedRowId(row);
@@ -70,7 +69,8 @@ export const Competition = ({
 
   return (
     <Stack sx={{ height: "100%", backgroundColor: "#ECF0F1", p: 2}}>
-      {isCreator && isCompetitionInFuture && <IsCreator sx={{mb: 2}} competitionId={competitionId} />}
+      {/** TODO - does userId match owner ID, show IsCreator (rename IsOwner) */}
+      {true && isCompetitionInFuture && <IsCreator sx={{mb: 2}} competitionId={competitionId} />}
       {isNotFitbitEnabled && <NotFitbitIntegrated />}
       {isCompetitionInFuture ?
         <CompetitionNotStarted competition={competition}/>
@@ -78,7 +78,7 @@ export const Competition = ({
         <Stack sx={{flex: 1, position: "relative"}}>
           <Box sx={{...(isNotFitbitEnabled && {position: "absolute", backgroundColor: "black", flex: 1, width: "100%", height: "100%", opacity: 0.5, zIndex: 2})}}/>
           <Stack flexDirection={"row"} sx={{ p: 4}}>
-            <TeamSummary users={teamMembers} />
+            {team && <TeamSummary users={team.users} />}
             <Leaderbaord
               sx={{ ml: 2 }}
               rows={teams?.items ?? []}

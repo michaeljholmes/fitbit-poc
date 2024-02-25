@@ -30,7 +30,7 @@ export const JoinCompetitionViaLink = () => {
                 Welcome to Stridewars!
             </Typography>
             <Typography variant="body1">
-                You been invited to join '{data.name}' competition by '{data.creator}'. Sign up below.
+                You been invited to join '{data.name}' competition by '{data.owner.username}'. Sign up below.
             </Typography>  
             <Button 
                 variant="outlined" 

@@ -1,26 +1,23 @@
 export interface User {
     id: string,
     email: string,
-    name: string,
-    isCreator: boolean,
-    createdId?: string,
+    username: string,
     competitionId?: string;
-    isFitbitIntegrated: boolean;
+    isFitbitIntegrated?: boolean;
   }
 
   export interface Competition {
     id: string;
     name: string;
-    creator: string;
-    // teams: Team[];
+    owner: User;
     startTime: string;
   }
 
   export interface Team {
     id: string;
-    name: string;
+    username: string;
     position: number,
-    users: string[]
+    users: User[]
   }
 
   export interface FitbitDetails {

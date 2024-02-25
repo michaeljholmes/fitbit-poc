@@ -1,12 +1,19 @@
-import { User } from "../api.types";
+import { Team } from "../api.types";
 import { getTeamMembersEndpoint } from "./endpoints";
 
-  export const fetchTeam = async (teamId: string): Promise<User[]> => {
-    try {
-      const response = await fetch(getTeamMembersEndpoint(teamId));
-      let teamMembers: User[] = await response.json();
-      return teamMembers;
-    } catch (e) {
-      return [];
+const isProduction = import.meta.env.MODE === "production";
+
+export const fetchTeam = async (teamId: string): Promise<Team> => {
+  try {
+    const response = await fetch(getTeamMembersEndpoint(teamId));
+    let team: Team = await response.json();
+    return team;
+  } catch (e) {
+    return {
+      id: "",
+      users: [],
+      username: "",
+      position: 0
     }
-  };
+  }
+};
