@@ -4,9 +4,9 @@
       "id": "competition1",
       "name": "Competition Name",
       "owner": {
-        "id": "user1",
-        "email": "test@test.com",
-        "username": "test"
+        "id": "tes2@test.com",
+        "email": "test2@test.com",
+        "username": "test2"
       },
       "startTime": "2024-02-20T18:00:00.000Z",
       "endTime": "2024-02-28T18:00:00.000Z"
@@ -19,14 +19,14 @@
       "position": 3,
       "users": [
         {
-          "id": "user1",
-          "email": "test@test.com",
-          "username": "test"
+          "id": "test2@test.com",
+          "email": "test2@test.com",
+          "username": "test2"
         },
         {
-          "id": "user2",
-          "email": "test1@test.com",
-          "username": "test1"
+          "id": "test3@test.com",
+          "email": "test3@test.com",
+          "username": "test3"
         }
       ]
     },
@@ -36,14 +36,14 @@
       "position": 1,
       "users": [
         {
-          "id": "user3",
-          "email": "test@test.com",
-          "username": "test3"
+          "id": "test4@test.com",
+          "email": "test4@test.com",
+          "username": "test4"
         },
         {
-          "id": "user4",
-          "email": "test1@test.com",
-          "username": "test4"
+          "id": "test5@test.com",
+          "email": "test5@test.com",
+          "username": "test5"
         }
       ]
     },
@@ -53,34 +53,34 @@
       "position": 2,
       "users": [
         {
-          "id": "user5",
-          "email": "test5@test.com",
-          "username": "test5"
+          "id": "test@test.com",
+          "email": "test@test.com",
+          "username": "test1"
         }
       ]
     }
   ],
   "users": [
     {
-      "id": "user1",
+      "id": "test@test.com",
       "email": "test@test.com",
-      "username": "test",
+      "username": "test1",
       "password": "test",
-      "isCreator": true,
+      "isOwner": true,
       "createdId": "competition1",
       "competitionId": "competition1",
       "isFitbitIntegrated": true
     },
     {
-      "id": "user2",
-      "email": "test1@test.com",
-      "username": "test1",
+      "id": "test2@test.com",
+      "email": "test2@test.com",
+      "username": "test2",
       "password": "test",
       "competitionId": "competition1",
       "isFitbitIntegrated": true
     },
     {
-      "id": "user3",
+      "id": "test3@test.com",
       "email": "test3@test.com",
       "username": "test3",
       "password": "test",
@@ -88,19 +88,17 @@
       "isFitbitIntegrated": false
     },
     {
-      "id": "user4",
+      "id": "test4@test.com",
       "email": "test4@test.com",
       "username": "test4",
       "password": "test",
-      "isCreator": true,
       "isFitbitIntegrated": false
     },
     {
-      "id": "user5",
+      "id": "test5@test.com",
       "email": "test5@test.com",
       "username": "test5",
-      "password": "test",
-      "isCreator": true
+      "password": "test"
     }
   ],
   "fitbitDetails": {

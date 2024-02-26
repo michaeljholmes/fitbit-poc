@@ -8,7 +8,7 @@ import {
   Typography,
   useEventCallback,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { rem } from "polished";
 import { Outlet } from "react-router";
@@ -34,14 +34,20 @@ export const Template = () => {
     }
   });
 
-  const { data, isLoading } = useUser();
-
-  const { isLoading: isAuth0Loading, isAuthenticated, error, user, loginWithRedirect, logout, } =
+  const { isLoading: isAuth0Loading, isAuthenticated, user, loginWithRedirect, logout, } =
     useAuth0();
 
-  const signOut = () => logout({logoutParams: {returnTo: import.meta.env.VITE_URL}})
+  useEffect(() => {
+    if(!isAuthenticated && !isAuth0Loading){
+      loginWithRedirect({authorizationParams: {screen_hint:"login"}});
+    }
+  }, [isAuthenticated, isAuth0Loading]);
 
-  if(isLoading){
+  const { data, isLoading } = useUser(user?.email ?? undefined);
+
+  const signOut = () => logout({logoutParams: {returnTo: import.meta.env.VITE_URL}});
+
+  if(!isAuthenticated || isAuth0Loading || isLoading){
       return <Stack sx={{mt: 16}} alignItems={"center"}><CircularProgress /></Stack>;
   }
 

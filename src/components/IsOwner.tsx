@@ -1,7 +1,7 @@
 import { Button, Stack, SxProps, Tooltip, Typography } from "@mui/material";
 import { rem } from "polished";
 
-interface IsCreatorProps {
+interface IsOwnerProps {
     competitionId: string;
     sx?: SxProps;
 }
@@ -9,9 +9,9 @@ interface IsCreatorProps {
 const getCompetitionSignUpUrl = (competitionId: string): string => `${import.meta.env.VITE_URL}/sign-up/${competitionId}`;
 
 /**
- * For now, the creator will have a default competitionId, they can send out the link with the competition ID.
+ * For now, the owner will have a default competitionId, they can send out the link with the competition ID.
  */
-export const IsCreator = ({competitionId, sx}: IsCreatorProps) => {
+export const IsOwner = ({competitionId, sx}: IsOwnerProps) => {
     const link = getCompetitionSignUpUrl(competitionId);
     return (
         <Stack sx={sx}>

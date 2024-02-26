@@ -12,5 +12,8 @@ Thoughts
  - Enforce google sign in only?
 
 TODO
- - Create user on successful sign up 
+Add steps into data and api call
+List exactly what is needed next from Ollie
+Trial authenticated endpoint and plug in
+Sign user up on verification page
 

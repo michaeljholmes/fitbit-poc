@@ -1,4 +1,4 @@
-import { Box, Button, Stack, Typography, styled } from "@mui/material";
+import { Box, Stack, Typography, styled } from "@mui/material";
 import { rem } from "polished";
 import { Copyright } from "../components/Copyright";
 import { BackgroundHeader } from "../components/BackgroundHeader";

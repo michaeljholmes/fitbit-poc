@@ -11,7 +11,7 @@ export const BaseRouter = () => (
   <Routes>
     <Route path="/" element={<LandingPage />} />
     <Route path="/demo" element={<DemoPage />} />
-    <Route path="join-ccompetition" element={<JoinCompetitionViaLink />} />
+    <Route path="join-competition" element={<JoinCompetitionViaLink />} />
     <Route path="verification" element={<VerificationPage />} />
     <Route path="dashboard">
       <Route element={<Template />}>

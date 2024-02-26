@@ -9,7 +9,7 @@ import { fetchCompetitionTeams } from "../../api/requests/competitionRequests";
 import { useTeam } from "../../api/hooks/teams/useTeam";
 import { Team, User } from "../../api/api.types";
 import { isDateInFuture } from "../../utils/isDateInFuture";
-import { IsCreator } from "../../components/IsCreator";
+import { IsOwner } from "../../components/IsOwner";
 import { CompetitionNotStarted } from "../../components/CompetitionNotStarted";
 
 interface CompetitionProps {
@@ -22,7 +22,8 @@ interface CompetitionProps {
 export const Competition = ({
   competitionId,
   user: {
-    isFitbitIntegrated
+    isFitbitIntegrated,
+    id
   }
 }: CompetitionProps) => {
   const [pageSize, setPageSize] = useState(2);
@@ -43,13 +44,14 @@ export const Competition = ({
     },
     enabled: Boolean(competition)
   });
-  console.log(teams)
 
   const [selectedRowId, setSelectedRowId] = useState<string[] | undefined>(
     undefined,
   );
 
   const { data: team } = useTeam(selectedTeam);
+
+  const isOwner = useMemo(() => competition?.owner.id === id, [id, competition]);
 
   const onSelectedRow = async (row: string[]) => {
     setSelectedRowId(row);
@@ -69,8 +71,7 @@ export const Competition = ({
 
   return (
     <Stack sx={{ height: "100%", backgroundColor: "#ECF0F1", p: 2}}>
-      {/** TODO - does userId match owner ID, show IsCreator (rename IsOwner) */}
-      {true && isCompetitionInFuture && <IsCreator sx={{mb: 2}} competitionId={competitionId} />}
+      {isOwner && isCompetitionInFuture && <IsOwner sx={{mb: 2}} competitionId={competitionId} />}
       {isNotFitbitEnabled && <NotFitbitIntegrated />}
       {isCompetitionInFuture ?
         <CompetitionNotStarted competition={competition}/>
@@ -78,12 +79,11 @@ export const Competition = ({
         <Stack sx={{flex: 1, position: "relative"}}>
           <Box sx={{...(isNotFitbitEnabled && {position: "absolute", backgroundColor: "black", flex: 1, width: "100%", height: "100%", opacity: 0.5, zIndex: 2})}}/>
           <Stack flexDirection={"row"} sx={{ p: 4}}>
-            {team && <TeamSummary users={team.users} />}
+            <TeamSummary team={team} />
             <Leaderbaord
               sx={{ ml: 2 }}
               rows={teams?.items ?? []}
               onPaginationModelChange={(model) => {
-                console.log(model);
                 setPage(model.page);
                 setPageSize(model.pageSize);
               }}

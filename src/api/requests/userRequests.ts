@@ -1,9 +1,9 @@
 import { api } from "..";
 import { User } from "../api.types";
-import { getUserByIdEndpoint } from "./endpoints";
+import { getUserByEmailEndpoint } from "./endpoints";
 
-export const getUserById = async (userId: string): Promise<User> => {
-    const user = await fetch(getUserByIdEndpoint(userId), {
+export const getUserByEmail = async (email: string): Promise<User> => {
+    const user = await fetch(getUserByEmailEndpoint(email), {
         method: "GET",
         headers: {
             "Content-Type": "application/json"
