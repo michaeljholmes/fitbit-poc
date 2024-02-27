@@ -4,6 +4,7 @@ export interface User {
     username: string,
     competitionId?: string;
     isFitbitIntegrated?: boolean;
+    steps: number;
   }
 
   export interface Competition {
@@ -15,6 +16,7 @@ export interface User {
 
   export interface Team {
     id: string;
+    teamName: string;
     username: string;
     position: number,
     users: User[]

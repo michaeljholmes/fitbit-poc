@@ -9,7 +9,7 @@ const columns: GridColDef[] = [
     disableColumnMenu: true,
   },
   {
-    field: "name",
+    field: "teamName",
     headerName: "Name",
     disableColumnMenu: true,
     width: 100,

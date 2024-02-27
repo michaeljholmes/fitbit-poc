@@ -18,7 +18,7 @@ export const useConnectToFitbit = (): UseMutationResult<User, unknown, ConnectTo
       mutationFn: ({code, state}: ConnectToFitbit) => connectToFitbit(currentUserId, code, state),
       mutationKey: ["connectToFitbit"],
       onSuccess: () => {
-        queryClient.invalidateQueries('getUserById');
+        queryClient.invalidateQueries('getUserByEmail');
       },
     });
 }

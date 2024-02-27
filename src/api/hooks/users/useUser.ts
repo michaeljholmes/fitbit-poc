@@ -1,6 +1,6 @@
 import { UseQueryResult, useQuery } from "react-query";
-import { User } from "../api.types";
-import { getUserByEmail } from "../requests/userRequests";
+import { User } from "../../api.types";
+import { getUserByEmail } from "../../requests/userRequests";
 
 export const useUser = (userEmail?: string): UseQueryResult<User> => {
 
@@ -8,7 +8,7 @@ export const useUser = (userEmail?: string): UseQueryResult<User> => {
     const isLoggedIn = true; 
 
     return useQuery({
-      queryKey: ["getUserById", isLoggedIn],
+      queryKey: ["getUserByEmail", isLoggedIn],
       queryFn: () => getUserByEmail(userEmail!),
       enabled: Boolean(userEmail)
     });

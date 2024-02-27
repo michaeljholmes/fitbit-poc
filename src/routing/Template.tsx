@@ -16,7 +16,7 @@ import { MobileNavBar } from "./nav";
 import { DesktopNavBar } from "./nav/DesktopNavBar";
 import { routes } from "./routes";
 import { useIsDesktop } from "../hooks/breakpoint";
-import { useUser } from "../api/hooks/useUser";
+import { useUser } from "../api/hooks/users/useUser";
 import { User } from "../api/api.types";
 import { useAuth0 } from "@auth0/auth0-react";
 

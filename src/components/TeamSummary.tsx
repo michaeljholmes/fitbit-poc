@@ -18,6 +18,7 @@ interface TeamSummaryProps {
 }
 
 export const TeamSummary = ({ team }: TeamSummaryProps) => {
+  console.log(team);
   return (
     <Stack sx={{ width: rem(300), zIndex: 1}}>
       {!team ? <CircularProgress sx={{alignSelf: "center"}}/> :
@@ -36,9 +37,9 @@ export const TeamSummary = ({ team }: TeamSummaryProps) => {
             height: rem(40),
           }}
         >
-          <Typography sx={{ flex: 1 }}>Team Name</Typography>
-          <Typography sx={{ width: rem(70) }}>Total</Typography>
-          <Typography sx={{ width: rem(70) }}>12345</Typography>
+          <Typography sx={{ flex: 1 }}>{team.teamName}</Typography>
+          <Typography align="right" sx={{ width: rem(90) }}>Team Total</Typography>
+          <Typography align="right" sx={{ width: rem(80) }}>{team.users.reduce((acc, cv) => acc + cv.steps, 0)}</Typography>
         </Stack>
         <TableContainer component={Paper}>
           <Table
@@ -47,13 +48,12 @@ export const TeamSummary = ({ team }: TeamSummaryProps) => {
           >
             <TableHead sx={{}}>
               <TableRow>
-                <TableCell>Team</TableCell>
-                <TableCell align="right">Today</TableCell>
-                <TableCell align="right">Total</TableCell>
+                <TableCell >Members</TableCell>
+                <TableCell align="right">Steps</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {team.users?.map(({ id, username }) => (
+              {team.users?.map(({ id, username, steps }) => (
                 <TableRow
                   key={id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -61,8 +61,7 @@ export const TeamSummary = ({ team }: TeamSummaryProps) => {
                   <TableCell component="th" scope="row">
                     {username}
                   </TableCell>
-                  <TableCell align="right">{"today"}</TableCell>
-                  <TableCell align="right">{"total"}</TableCell>
+                  <TableCell align="right">{steps}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

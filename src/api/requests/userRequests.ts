@@ -1,6 +1,6 @@
 import { api } from "..";
 import { User } from "../api.types";
-import { getUserByEmailEndpoint } from "./endpoints";
+import { getUserByEmailEndpoint, postUserEndpoint } from "./endpoints";
 
 export const getUserByEmail = async (email: string): Promise<User> => {
     const user = await fetch(getUserByEmailEndpoint(email), {
@@ -12,6 +12,20 @@ export const getUserByEmail = async (email: string): Promise<User> => {
     });
     return await user.json();
 };
+
+export const postUser = async (email: string): Promise<User> => {
+    const newUser = await fetch(postUserEndpoint(), {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+            email
+        })
+    });
+    return await newUser.json();
+}
 
 export const connectToFitbit = async (userId: string, state: string, code: string): Promise<User> => {
     const user = await fetch(`${api}/users/${userId}`, {

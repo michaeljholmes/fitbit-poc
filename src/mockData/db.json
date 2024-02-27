@@ -15,47 +15,52 @@
   "teams": [
     {
       "id": "team1",
-      "name": "Team 1",
+      "teamName": "Team 1",
       "position": 3,
       "users": [
         {
           "id": "test2@test.com",
           "email": "test2@test.com",
-          "username": "test2"
+          "username": "test2",
+          "steps": 237683
         },
         {
           "id": "test3@test.com",
           "email": "test3@test.com",
-          "username": "test3"
+          "username": "test3",
+          "steps": 623475
         }
       ]
     },
     {
       "id": "team2",
-      "name": "Team 2",
+      "teamName": "Team 2",
       "position": 1,
       "users": [
         {
           "id": "test4@test.com",
           "email": "test4@test.com",
-          "username": "test4"
+          "username": "test4",
+          "steps": 124832
         },
         {
           "id": "test5@test.com",
           "email": "test5@test.com",
-          "username": "test5"
+          "username": "test5",
+          "steps": 837642
         }
       ]
     },
     {
       "id": "team3",
-      "name": "Team 3",
+      "teamName": "Team 3",
       "position": 2,
       "users": [
         {
           "id": "test@test.com",
           "email": "test@test.com",
-          "username": "test1"
+          "username": "test1",
+          "steps": 746382
         }
       ]
     }

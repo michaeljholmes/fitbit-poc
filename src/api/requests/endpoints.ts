@@ -15,8 +15,13 @@ export const getTeamMembersEndpoint = (teamId: string) =>
     isProduction ? `${import.meta.env.VITE_API}/api/team/${teamId}` :
     `${import.meta.env.VITE_API}/teams/${teamId}`;    
 
-// Get User By ID
+// Get User by email
 export const getUserByEmailEndpoint = (userId: string) => 
     isProduction ? `${import.meta.env.VITE_API}/api/user/${userId}` :
-    `${import.meta.env.VITE_API}/users/${userId}`;  
+    `${import.meta.env.VITE_API}/users/${userId}`;
+    
+// Post User
+export const postUserEndpoint = () => 
+    isProduction ? `${import.meta.env.VITE_API}/api/user` :
+    `${import.meta.env.VITE_API}/users`;    
     

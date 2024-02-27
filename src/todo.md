@@ -13,7 +13,8 @@ Thoughts
 
 TODO
 Add steps into data and api call
-List exactly what is needed next from Ollie
 Trial authenticated endpoint and plug in
 Sign user up on verification page
+
+Need total team steps in team
 
