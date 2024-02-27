@@ -16,5 +16,6 @@ Add steps into data and api call
 Trial authenticated endpoint and plug in
 Sign user up on verification page
 
-Need total team steps in team
+Need total team steps in team (can add up users if not)
+CORS issues calling API
 
