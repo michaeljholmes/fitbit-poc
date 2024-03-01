@@ -20,14 +20,19 @@ import { useUser } from "../api/hooks/users/useUser";
 import { User } from "../api/api.types";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAsync } from "react-use";
+import { getUserByEmail } from "../api/requests/userRequests";
+import { useRecoilState } from "recoil";
+import { loggedInState } from "../state/loggedIn";
 
 export interface OutletContext {
   user: User;
 }
 
 export const Template = () => {
+  
   const isDesktop = useIsDesktop();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [loggedIn, setLoggedIn] = useRecoilState(loggedInState); 
 
   const onLinkClick = useEventCallback(() => {
     if (!isDesktop) {
@@ -44,25 +49,37 @@ export const Template = () => {
     }
   }, [isAuthenticated, isAuth0Loading]);
 
-  useAsync(async () => {
-    try {
-      const accessToken = await getAccessTokenSilently();
-      // Where should I store this function
-      console.log(accessToken);
-
-      const response = await fetch(`http://162.0.223.239:9999/api/health`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      const result = await response.json();
-      console.log(result);
-    } catch (e) {
-      console.log(e);
+  useAsync(async() => {
+    if(isAuthenticated && user && user.email){
+      try {
+        const loggedInUser = await getUserByEmail(user.email);
+        setLoggedIn({isLoggedIn: true, userEmail: loggedInUser.email});
+        return loggedInUser;
+      } catch (e) {
+        console.log("Could not find user")
+      }
     }
-  }, [getAccessTokenSilently, user?.sub]);
+  }, [isAuthenticated, user]);
 
-  const { data, isLoading } = useUser(user?.email ?? undefined);
+  // useAsync(async () => {
+  //   try {
+  //     const accessToken = await getAccessTokenSilently();
+  //     // Where should I store this function
+  //     console.log(accessToken);
+
+  //     const response = await fetch(`http://162.0.223.239:9999/api/health`, {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     });
+  //     const result = await response.json();
+  //     console.log(result);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }, [getAccessTokenSilently, user?.sub]);
+
+  const { data, isLoading } = useUser();
 
   const signOut = () => logout({logoutParams: {returnTo: import.meta.env.VITE_URL}});
 

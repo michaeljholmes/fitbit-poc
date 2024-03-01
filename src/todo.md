@@ -12,10 +12,17 @@ Thoughts
  - Enforce google sign in only?
 
 TODO
-Add steps into data and api call
 Trial authenticated endpoint and plug in
 Sign user up on verification page
 
-Need total team steps in team (can add up users if not)
-CORS issues calling API
 
+Still getting CORS issue using http://162.0.223.239:9999/
+When posting a user, we can only use email (remove username, will add this later)
+I need the return URL to be /dashboard/tracker
+Can GET api/fitbit/authURL please come back as JSON
+Can swagger please have response types?
+We need an endpoint to diconnect from fitbit
+
+I've decided to fully switch over to the live API as trying to match up the JSON server behaviour with the backend it tricky.
+
+Next - fix verification, and loggedIn checks to hooks, tidy up hooks, make look a little nicer
