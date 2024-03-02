@@ -1,14 +1,13 @@
 {
-  "challenges": [
+  "competitions": [
     {
-      "id": "challenge1",
-      "name": "Challenge Name",
-      "creator": "user1",
-      "teams": [
-        "team1",
-        "team2",
-        "team3"
-      ],
+      "id": "competition1",
+      "name": "Competition Name",
+      "owner": {
+        "id": "tes2@test.com",
+        "email": "test2@test.com",
+        "username": "test2"
+      },
       "startTime": "2024-02-20T18:00:00.000Z",
       "endTime": "2024-02-28T18:00:00.000Z"
     }
@@ -16,70 +15,95 @@
   "teams": [
     {
       "id": "team1",
-      "name": "Team 1",
+      "teamName": "Team 1",
       "position": 3,
       "users": [
-        "user1"
+        {
+          "id": "test2@test.com",
+          "email": "test2@test.com",
+          "username": "test2",
+          "steps": 237683
+        },
+        {
+          "id": "test3@test.com",
+          "email": "test3@test.com",
+          "username": "test3",
+          "steps": 623475
+        }
       ]
     },
     {
       "id": "team2",
-      "name": "Team 2",
+      "teamName": "Team 2",
       "position": 1,
       "users": [
-        "user2"
+        {
+          "id": "test4@test.com",
+          "email": "test4@test.com",
+          "username": "test4",
+          "steps": 124832
+        },
+        {
+          "id": "test5@test.com",
+          "email": "test5@test.com",
+          "username": "test5",
+          "steps": 837642
+        }
       ]
     },
     {
       "id": "team3",
-      "name": "Team 3",
+      "teamName": "Team 3",
       "position": 2,
       "users": [
-        "user3"
+        {
+          "id": "test@test.com",
+          "email": "test@test.com",
+          "username": "test1",
+          "steps": 746382
+        }
       ]
     }
   ],
   "users": [
     {
-      "id": "user1",
+      "id": "test@test.com",
       "email": "test@test.com",
-      "name": "test",
+      "username": "test1",
       "password": "test",
-      "isCreator": true,
-      "createdId": "challenge1",
-      "challengeId": "challenge1",
+      "isOwner": true,
+      "createdId": "competition1",
+      "competitionId": "competition1",
       "isFitbitIntegrated": true
     },
     {
-      "id": "user2",
-      "email": "test1@test.com",
-      "name": "test1",
+      "id": "test2@test.com",
+      "email": "test2@test.com",
+      "username": "test2",
       "password": "test",
-      "challengeId": "challenge1",
+      "competitionId": "competition1",
       "isFitbitIntegrated": true
     },
     {
-      "id": "user3",
+      "id": "test3@test.com",
       "email": "test3@test.com",
-      "name": "test3",
+      "username": "test3",
       "password": "test",
-      "challengeId": "challenge1",
+      "competitionId": "competition1",
       "isFitbitIntegrated": false
     },
     {
-      "id": "user5",
+      "id": "test4@test.com",
+      "email": "test4@test.com",
+      "username": "test4",
+      "password": "test",
+      "isFitbitIntegrated": false
+    },
+    {
+      "id": "test5@test.com",
       "email": "test5@test.com",
-      "name": "test5",
-      "password": "test",
-      "isCreator": true,
-      "isFitbitIntegrated": false
-    },
-    {
-      "id": "user5",
-      "email": "test@test.com",
-      "name": "test",
-      "password": "test",
-      "isCreator": true
+      "username": "test5",
+      "password": "test"
     }
   ],
   "fitbitDetails": {

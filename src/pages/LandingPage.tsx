@@ -3,6 +3,8 @@ import { rem } from "polished";
 import { Copyright } from "../components/Copyright";
 import { BackgroundHeader } from "../components/BackgroundHeader";
 import { useIsMobile, useIsTablet } from "../hooks/breakpoint";
+import { ActionButton } from "../components/ActionButton";
+import { useNavigate } from "react-router";
 
 const powerUps = [
   {
@@ -40,10 +42,16 @@ const powerUps = [
 export const LandingPage = () => {
   const isTablet = useIsTablet();
   const isMobile = useIsMobile();
-
+  const navigate = useNavigate();
+ 
   return (
     <>
       <BackgroundHeader >
+        <ActionButton sx={{
+          position:"absolute",
+          top: 0,
+          right: 0
+        }}onClick={()=> navigate("dashboard")} text="Sign in" />
         <>
           <Typography
             variant="h1"
@@ -138,8 +146,9 @@ export const LandingPage = () => {
             gap: rem(20),
           }}
         >
-          {powerUps.map(({ header, text, image }) => (
+          {powerUps.map(({ header, text, image }, index) => (
             <Stack
+              key={index}
               flexDirection={"row"}
               sx={{
                 justifyContent: "space-between",

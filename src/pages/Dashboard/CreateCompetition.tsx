@@ -1,16 +1,16 @@
 import { Button, ButtonBase, Tab, Tooltip, Typography } from "@mui/material";
-import { CreateChallengeForm } from "../../form/CreateChallengeForm";
+import { CreateCompetitionForm } from "../../form/CreateCompetitionForm";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useState, SyntheticEvent } from "react";
 import { CreateTeam } from "../../form/CreateTeam";
 import { useGenerateTeamLink } from "../../api/hooks/teams/useGenerateTeamLink";
 import { User } from "../../api/api.types";
 
-interface CreateChallengeProps {
+interface CreateCompetitioneProps {
     user: User;
 }
 
-export const CreateChallenge = ({user: {id}}: CreateChallengeProps) => {
+export const CreateCompetition = ({user: {id}}: CreateCompetitioneProps) => {
 
     const [value, setValue] = useState("1");
 
@@ -27,7 +27,7 @@ export const CreateChallenge = ({user: {id}}: CreateChallengeProps) => {
                 Welcome to Stridewars!
             </Typography>
             {/* <Typography>
-                Simply create a challenge, set up your teams, choose when to start, and begin!
+                Simply create a competition, set up your teams, choose when to start, and begin!
             </Typography>
             <Typography>
                 You can have as many teams as you like. Each team can have up to 5 people. There are two ways to create teams, either manually, auto automagically. 
@@ -46,7 +46,7 @@ export const CreateChallenge = ({user: {id}}: CreateChallengeProps) => {
                 </li>
                 <li>
                     <Typography>
-                        Automatgically - Click the option below to generate a link, send this out to all participants allowing those interested to sign. Just before the challenge begins,
+                        Automatgically - Click the option below to generate a link, send this out to all participants allowing those interested to sign. Just before the competition begins,
                         all those that joined will be automatically be divided into teams. Odd numbers? Our BOT walkers will make up any extra places. 
                     </Typography>
                 </li>
@@ -67,10 +67,10 @@ export const CreateChallenge = ({user: {id}}: CreateChallengeProps) => {
                     <Tab label={`Automatic Team Creation`} value="2" />
                 </TabList>
                 <TabPanel value={"1"}>
-                    <CreateChallengeForm />
+                    <CreateCompetitionForm />
                 </TabPanel>
                 <TabPanel value={"2"}>
-                    <Typography>Send a link too all those who want to join. 24 hours before the challenge begins, they'll be divided into teams at random.</Typography>
+                    <Typography>Send a link too all those who want to join. 24 hours before the competition begins, they'll be divided into teams at random.</Typography>
                     <Button variant="outlined" onClick={generateLink} disabled={hasGeneratedLink}>Click here to generate a link</Button>
                     {hasGeneratedLink && 
                         <>

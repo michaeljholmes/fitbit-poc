@@ -33,23 +33,21 @@ const theme = createTheme({
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <Auth0Provider
-      domain="dev-1zqk355nlvfcwlml.us.auth0.com"
-      clientId="55MwJZOyVGXhrLdYFi1dgF4z55eqc9gf"
-      authorizationParams={{
-        redirect_uri: "http://localhost:5173/dashboard",
-      }}
-      useRefreshTokens={true}
-      cacheLocation="localstorage"  
-    >
-      <BrowserRouter>
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider theme={theme}>
-            <BaseRouter />
-          </ThemeProvider>
-        </QueryClientProvider>
-      </BrowserRouter>
-    </Auth0Provider>
-  </React.StrictMode>,
+  <Auth0Provider
+    domain="dev-1zqk355nlvfcwlml.us.auth0.com"
+    clientId="55MwJZOyVGXhrLdYFi1dgF4z55eqc9gf"
+    authorizationParams={{
+      redirect_uri: "http://localhost:5173/dashboard",
+    }}
+    useRefreshTokens={true}
+    cacheLocation="localstorage"  
+  >
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <BaseRouter />
+        </ThemeProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
+  </Auth0Provider>
 );

@@ -8,7 +8,7 @@ import {
   Typography,
   useEventCallback,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { rem } from "polished";
 import { Outlet } from "react-router";
@@ -16,9 +16,10 @@ import { MobileNavBar } from "./nav";
 import { DesktopNavBar } from "./nav/DesktopNavBar";
 import { routes } from "./routes";
 import { useIsDesktop } from "../hooks/breakpoint";
-import { useUser } from "../api/hooks/useUser";
+import { useUser } from "../api/hooks/users/useUser";
 import { User } from "../api/api.types";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useAsync } from "react-use";
 
 export interface OutletContext {
   user: User;
@@ -34,14 +35,38 @@ export const Template = () => {
     }
   });
 
-  const { data, isLoading } = useUser();
-
-  const { isLoading: isAuth0Loading, isAuthenticated, error, user, loginWithRedirect, logout, } =
+  const { isLoading: isAuth0Loading, isAuthenticated, user, loginWithRedirect, logout, getAccessTokenSilently } =
     useAuth0();
 
-  const signOut = () => logout({logoutParams: {returnTo: import.meta.env.VITE_URL}})
+  useEffect(() => {
+    if(!isAuthenticated && !isAuth0Loading){
+      loginWithRedirect({authorizationParams: {screen_hint:"login"}});
+    }
+  }, [isAuthenticated, isAuth0Loading]);
 
-  if(isLoading){
+  useAsync(async () => {
+    try {
+      const accessToken = await getAccessTokenSilently();
+      // Where should I store this function
+      console.log(accessToken);
+
+      const response = await fetch(`http://162.0.223.239:9999/api/health`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+    }
+  }, [getAccessTokenSilently, user?.sub]);
+
+  const { data, isLoading } = useUser(user?.email ?? undefined);
+
+  const signOut = () => logout({logoutParams: {returnTo: import.meta.env.VITE_URL}});
+
+  if(!isAuthenticated || isAuth0Loading || isLoading){
       return <Stack sx={{mt: 16}} alignItems={"center"}><CircularProgress /></Stack>;
   }
 

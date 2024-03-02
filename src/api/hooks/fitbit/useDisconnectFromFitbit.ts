@@ -13,7 +13,7 @@ export const useDisconnectFromFitbit = (): UseMutationResult<User, unknown, void
       mutationFn: () => disconnectToFitbit(currentUserId),
       mutationKey: ["disconnectToFitbit"],
       onSuccess: () => {
-        queryClient.invalidateQueries('getUserById');
+        queryClient.invalidateQueries('getUserByEmail');
       },
     });
 }

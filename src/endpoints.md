@@ -1,18 +1,19 @@
 ## Authentication
 TBD
 ## Competition
-GET  - competition By Id - done
-GET - competition members - done
-GET - competition teams - done
-Add - competition - done
-PATCH - join competition - done
-
-GET - join competition link - will need a like to join backend, can easily be /join-competition&competitionId="id" for now
-
+GET 
+competition By Id
+GET 
+competition members
+GET
+competition teams
+PATCH
+join competition
+GET
+join competition link - will need a like to join backend, can easily be /join-competition&competitionId="id" for now
 ## Fitbit
 GET
-Fitbit details (the clientId, codecompetition and generatedState)
-
+Fitbit details (the clientId, codeCompetition and generatedState)
 ## USER
 GET - user by ID - done
 

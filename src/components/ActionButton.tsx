@@ -2,13 +2,14 @@ import { Button, SxProps } from "@mui/material";
 import { rem } from "polished";
 
 interface SignOutButtonProps {
-    onSignout: () => void;
+    onClick: () => void;
     sx?: SxProps;
+    text: string;
 }
 
-export const SignOutButton = ({ onSignout, sx }: SignOutButtonProps) => 
+export const ActionButton = ({ onClick, sx, text}: SignOutButtonProps) => 
     <Button 
-        onClick={onSignout}
+        onClick={onClick}
             sx={{
             ...sx,
             color: "white",
@@ -18,4 +19,4 @@ export const SignOutButton = ({ onSignout, sx }: SignOutButtonProps) =>
             border: `${rem(1)} solid grey`,
             },
         }} 
-        variant="outlined">Sign out</Button>
+        variant="outlined">{text}</Button>
