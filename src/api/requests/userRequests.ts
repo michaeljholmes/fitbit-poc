@@ -21,7 +21,8 @@ export const postUser = async (email: string): Promise<User> => {
         },
         credentials: "include",
         body: JSON.stringify({
-            email
+            email,
+            userName: "test2"
         })
     });
     return await newUser.json();

@@ -9,7 +9,9 @@ export const fetchTeam = async (teamId: string): Promise<Team> => {
   } catch (e) {
     // TODO - unsure how to handle this error at the moment
     return {
-      id: "",
+      rank: 0,
+      teamName: "none",
+      teamId: "",
       users: [],
       username: "",
       position: 0
