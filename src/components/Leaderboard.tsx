@@ -12,7 +12,7 @@ const columns: GridColDef[] = [
     field: "teamName",
     headerName: "Name",
     disableColumnMenu: true,
-    width: 100,
+    width: 300,
     editable: false,
   },
 ];

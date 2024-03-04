@@ -28,7 +28,7 @@ export const Competition = ({
 }: CompetitionProps) => {
   const [pageSize, setPageSize] = useState(2);
   const [page, setPage] = useState(0);
-  const isNotFitbitEnabled = !isFitbitIntegrated;
+  const isNotFitbitEnabled = false; //!isFitbitIntegrated;
 
   const { isLoading: isCompetitionLoading, data: competition } = useCompetition(competitionId);
   const isCompetitionInFuture = useMemo(() => 
@@ -45,6 +45,13 @@ export const Competition = ({
     enabled: Boolean(competition)
   });
   console.log(teams);
+  const sortedTeams = useMemo(() => {
+    if(teams?.items){
+      const copy = {...teams};
+      return copy.items.sort((a, b) => a.rank - b.rank)
+    }
+    return [];
+  }, [teams]);
 
   const [selectedRowId, setSelectedRowId] = useState<string[] | undefined>(
     undefined,
@@ -69,11 +76,11 @@ export const Competition = ({
   if(!competition){
     return <Typography>No competition found</Typography>
   }
-  console.log(selectedTeam);
+
   return (
     <Stack sx={{ height: "100%", backgroundColor: "#ECF0F1", p: 2}}>
-      {/* {isOwner && isCompetitionInFuture && <IsOwner sx={{mb: 2}} competitionId={competitionId} />}
-      {isNotFitbitEnabled && <NotFitbitIntegrated />} */}
+      {/* {isOwner && isCompetitionInFuture && <IsOwner sx={{mb: 2}} competitionId={competitionId} />}*/}
+      {isNotFitbitEnabled && <NotFitbitIntegrated />} 
       {isCompetitionInFuture ?
         <CompetitionNotStarted competition={competition}/>
         :
@@ -83,7 +90,7 @@ export const Competition = ({
             <TeamSummary team={selectedTeam} />
             <Leaderbaord
               sx={{ ml: 2 }}
-              rows={teams?.items ?? []}
+              rows={sortedTeams}
               onPaginationModelChange={(model) => {
                 setPage(model.page);
                 setPageSize(model.pageSize);
