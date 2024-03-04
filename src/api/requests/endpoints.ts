@@ -1,4 +1,4 @@
-const isProduction = import.meta.env.MODE === "production";
+const isProduction = true; //import.meta.env.MODE === "production";
 
 // Get competition by ID
 export const getCompetitionEndpoint = (competitionId: string) => 

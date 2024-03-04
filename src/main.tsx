@@ -7,6 +7,7 @@ import { BaseRouter } from "./routing/BaseRouter";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
 import { Auth0Provider } from '@auth0/auth0-react';
+import { RecoilRoot } from "recoil";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -34,10 +35,10 @@ const theme = createTheme({
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <Auth0Provider
-    domain="dev-1zqk355nlvfcwlml.us.auth0.com"
-    clientId="55MwJZOyVGXhrLdYFi1dgF4z55eqc9gf"
+    domain="dev-yxk3603z484r631r.us.auth0.com"
+    clientId="lhoExBR8df0K1DkXrp05t062fEzyZ2gV"
     authorizationParams={{
-      redirect_uri: "http://localhost:5173/dashboard",
+      redirect_uri: `${import.meta.env.VITE_URL}/dashboard`,
     }}
     useRefreshTokens={true}
     cacheLocation="localstorage"  
@@ -45,7 +46,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <BaseRouter />
+          <RecoilRoot>
+            <BaseRouter />
+          </RecoilRoot>
         </ThemeProvider>
       </QueryClientProvider>
     </BrowserRouter>

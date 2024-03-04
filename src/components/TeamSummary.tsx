@@ -18,7 +18,7 @@ interface TeamSummaryProps {
 }
 
 export const TeamSummary = ({ team }: TeamSummaryProps) => {
-  console.log(team);
+
   return (
     <Stack sx={{ width: rem(300), zIndex: 1}}>
       {!team ? <CircularProgress sx={{alignSelf: "center"}}/> :

@@ -32,30 +32,31 @@ export const Competition = ({
 
   const { isLoading: isCompetitionLoading, data: competition } = useCompetition(competitionId);
   const isCompetitionInFuture = useMemo(() => 
-  competition?.startTime ? isDateInFuture(competition.startTime): false, [competition]);
+    competition?.startTime ? isDateInFuture(competition.startTime): false, [competition]);
 
   const [selectedTeam, setSelectedTeam] = useState<Team | undefined>();
 
   const { isLoading: isTeamsLoading, data: teams } = useQuery({
     queryKey: ["teams", pageSize, page],
-    queryFn: () => fetchCompetitionTeams(competition?.id!, pageSize, page),
+    queryFn: () => fetchCompetitionTeams(competitionId, pageSize, page),
     onSuccess: (teams) => {
       setSelectedTeam(teams.items[0]);
     },
     enabled: Boolean(competition)
   });
+  console.log(teams);
 
   const [selectedRowId, setSelectedRowId] = useState<string[] | undefined>(
     undefined,
   );
 
-  const { data: team } = useTeam(selectedTeam);
+  // const { data: team } = useTeam(selectedTeam);
 
   const isOwner = useMemo(() => competition?.owner.id === id, [id, competition]);
 
   const onSelectedRow = async (row: string[]) => {
     setSelectedRowId(row);
-    const team = teams?.items.find(({ id }) => id === row[0]);
+    const team = teams?.items.find(({ teamId }) => teamId === row[0]);
     if (team) {
       setSelectedTeam(team);
     }
@@ -68,18 +69,18 @@ export const Competition = ({
   if(!competition){
     return <Typography>No competition found</Typography>
   }
-
+  console.log(selectedTeam);
   return (
     <Stack sx={{ height: "100%", backgroundColor: "#ECF0F1", p: 2}}>
-      {isOwner && isCompetitionInFuture && <IsOwner sx={{mb: 2}} competitionId={competitionId} />}
-      {isNotFitbitEnabled && <NotFitbitIntegrated />}
+      {/* {isOwner && isCompetitionInFuture && <IsOwner sx={{mb: 2}} competitionId={competitionId} />}
+      {isNotFitbitEnabled && <NotFitbitIntegrated />} */}
       {isCompetitionInFuture ?
         <CompetitionNotStarted competition={competition}/>
         :
         <Stack sx={{flex: 1, position: "relative"}}>
           <Box sx={{...(isNotFitbitEnabled && {position: "absolute", backgroundColor: "black", flex: 1, width: "100%", height: "100%", opacity: 0.5, zIndex: 2})}}/>
           <Stack flexDirection={"row"} sx={{ p: 4}}>
-            <TeamSummary team={team} />
+            <TeamSummary team={selectedTeam} />
             <Leaderbaord
               sx={{ ml: 2 }}
               rows={teams?.items ?? []}
@@ -87,6 +88,7 @@ export const Competition = ({
                 setPage(model.page);
                 setPageSize(model.pageSize);
               }}
+              getRowId={(row: Team) => row?.teamId}
               rowCount={teams?.totalItems ?? 0}
               paginationModel={{ page, pageSize }}
               pageSizeOptions={[2, 4, 6]}

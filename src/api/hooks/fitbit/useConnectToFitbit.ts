@@ -13,6 +13,7 @@ export const useConnectToFitbit = (): UseMutationResult<User, unknown, ConnectTo
     const isLoggedIn = true; 
     const currentUserId = "user1";
     const queryClient = useQueryClient();
+    const [loggedIn] = useRecoilState(loggedInState); 
 
     return useMutation({
       mutationFn: ({code, state}: ConnectToFitbit) => connectToFitbit(currentUserId, code, state),

@@ -15,7 +15,7 @@ export interface User {
   }
 
   export interface Team {
-    id: string;
+    teamId: string;
     teamName: string;
     username: string;
     position: number,

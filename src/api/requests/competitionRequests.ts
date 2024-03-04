@@ -24,7 +24,7 @@ export const fetchCompetitionTeams = async (
   const teamResponse = await fetch(getCompetitionTeamsEndpoint(competitionId));
   const teamResult =  await teamResponse.json();
   return {
-    items: teamResult,
+    items: teamResult.teams,
     pageSize,
     page,
     totalItems: 3,

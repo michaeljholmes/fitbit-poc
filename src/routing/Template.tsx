@@ -23,6 +23,7 @@ import { useAsync } from "react-use";
 import { getUserByEmail } from "../api/requests/userRequests";
 import { useRecoilState } from "recoil";
 import { loggedInState } from "../state/loggedIn";
+import { useIsUserLoggedIn } from "../api/hooks/users/useIsUserLoggedIn";
 
 export interface OutletContext {
   user: User;
@@ -40,8 +41,9 @@ export const Template = () => {
     }
   });
 
-  const { isLoading: isAuth0Loading, isAuthenticated, user, loginWithRedirect, logout, getAccessTokenSilently } =
-    useAuth0();
+  const {isAuthenticated, isLoading: isAuth0Loading, user} = useIsUserLoggedIn();
+
+  const { logout, loginWithRedirect } = useAuth0();
 
   useEffect(() => {
     if(!isAuthenticated && !isAuth0Loading){
@@ -49,17 +51,17 @@ export const Template = () => {
     }
   }, [isAuthenticated, isAuth0Loading]);
 
-  useAsync(async() => {
-    if(isAuthenticated && user && user.email){
-      try {
-        const loggedInUser = await getUserByEmail(user.email);
-        setLoggedIn({isLoggedIn: true, userEmail: loggedInUser.email});
-        return loggedInUser;
-      } catch (e) {
-        console.log("Could not find user")
-      }
-    }
-  }, [isAuthenticated, user]);
+  // useAsync(async() => {
+  //   if(isAuthenticated && user && user.email){
+  //     try {
+  //       const loggedInUser = await getUserByEmail(user.email);
+  //       setLoggedIn({isLoggedIn: true, userEmail: loggedInUser.email});
+  //       return loggedInUser;
+  //     } catch (e) {
+  //       console.log("Could not find user")
+  //     }
+  //   }
+  // }, [isAuthenticated, user]);
 
   // useAsync(async () => {
   //   try {
@@ -79,15 +81,15 @@ export const Template = () => {
   //   }
   // }, [getAccessTokenSilently, user?.sub]);
 
-  const { data, isLoading } = useUser();
+ // const { data, isLoading } = useUser();
 
   const signOut = () => logout({logoutParams: {returnTo: import.meta.env.VITE_URL}});
 
-  if(!isAuthenticated || isAuth0Loading || isLoading){
+  if(!isAuthenticated || isAuth0Loading){
       return <Stack sx={{mt: 16}} alignItems={"center"}><CircularProgress /></Stack>;
   }
 
-  if(!data) {
+  if(!user) {
       return <p>No user found!</p>
   }
 
@@ -102,7 +104,7 @@ export const Template = () => {
           minWidth: 0,
         }}
       >
-        <Outlet context={{user: data} satisfies OutletContext}/>
+        <Outlet context={{user} satisfies OutletContext}/>
       </Stack>
     </Stack>
   ) : (
@@ -129,7 +131,7 @@ export const Template = () => {
         </IconButton>
       </Box>
       <Stack sx={{ height: `calc(100vh - 42px)` }}>
-        <Outlet context={{user: data}  satisfies OutletContext} />
+        <Outlet context={{user}  satisfies OutletContext} />
       </Stack>
       <Drawer
         sx={{
