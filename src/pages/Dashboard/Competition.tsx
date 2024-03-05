@@ -23,7 +23,7 @@ export const Competition = ({
   competitionId,
   user: {
     isFitbitIntegrated,
-    id
+    userId
   }
 }: CompetitionProps) => {
   const [pageSize, setPageSize] = useState(2);
@@ -59,7 +59,7 @@ export const Competition = ({
 
   // const { data: team } = useTeam(selectedTeam);
 
-  const isOwner = useMemo(() => competition?.owner.id === id, [id, competition]);
+  const isOwner = useMemo(() => competition?.owner.userId === userId, [userId, competition]);
 
   const onSelectedRow = async (row: string[]) => {
     setSelectedRowId(row);
@@ -85,7 +85,7 @@ export const Competition = ({
         <CompetitionNotStarted competition={competition}/>
         :
         <Stack sx={{flex: 1, position: "relative"}}>
-          <Box sx={{...(isNotFitbitEnabled && {position: "absolute", backgroundColor: "black", flex: 1, width: "100%", height: "100%", opacity: 0.5, zIndex: 2})}}/>
+          <Box sx={{...(isNotFitbitEnabled ? {position: "absolute", backgroundColor: "black", flex: 1, width: "100%", height: "100%", opacity: 0.5, zIndex: 2}: {})}}/>
           <Stack flexDirection={"row"} sx={{ p: 4}}>
             <TeamSummary team={selectedTeam} />
             <Leaderbaord

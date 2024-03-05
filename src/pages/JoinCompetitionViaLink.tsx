@@ -16,11 +16,8 @@ export const JoinCompetitionViaLink = () => {
     const navigate = useNavigate();
     const {mutateAsync} = useCreateUser();
 
-    useEffect(() => {console.log("mutateAsync")} ,[mutateAsync]);
-
     //If authenticated, do they have a user? If not, create one. 
     useAsync(async () => {
-        console.log("useAsync");
         if(isAuthenticated && !isLoading){
             if(user) {
                 navigate("/dashboard");
