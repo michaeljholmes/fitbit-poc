@@ -49,7 +49,7 @@ export const FitBitIntegration = () => {
     // Revoke token server side, trigger refetching user
     const revokeUser = async () => {
         try {
-            await disconnectFromFitbit.mutateAsync();
+            await disconnectFromFitbit.mutateAsync(user.userId);
         } catch (e){
             console.log(e);
         }
