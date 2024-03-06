@@ -39,3 +39,5 @@ export const getFitbitAuthURL = (userId: string) =>
 export const postFitbitAuthURL = () =>     
     isProduction ? `${import.meta.env.VITE_API}/api/fitbit/tokens` :
     `URL`;
+
+export const deleteFitbitTokens = (userId: string) => `${import.meta.env.VITE_API}/api/fitbit/tokens/${userId}`

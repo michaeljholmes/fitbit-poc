@@ -16,3 +16,6 @@ Trial authenticated endpoint and plug in
 Sign user up on verification page
 
 Next - fix verification, and loggedIn checks to hooks, tidy up hooks, make look a little nicer
+
+It might in time be worth seperating out steps from user.
+Need to decide what to do about paging

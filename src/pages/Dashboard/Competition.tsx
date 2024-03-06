@@ -28,7 +28,7 @@ export const Competition = ({
 }: CompetitionProps) => {
   const [pageSize, setPageSize] = useState(2);
   const [page, setPage] = useState(0);
-  const isNotFitbitEnabled = false; //!isFitbitIntegrated;
+  const isNotFitbitEnabled = !isFitbitIntegrated;
 
   const { isLoading: isCompetitionLoading, data: competition } = useCompetition(competitionId);
   const isCompetitionInFuture = useMemo(() => 
@@ -44,11 +44,11 @@ export const Competition = ({
     },
     enabled: Boolean(competition)
   });
-  console.log(teams);
+
   const sortedTeams = useMemo(() => {
     if(teams?.items){
-      const copy = {...teams};
-      return copy.items.sort((a, b) => a.rank - b.rank)
+      const copy = [...teams.items];
+      return copy.sort((a, b) => a.rank - b.rank)
     }
     return [];
   }, [teams]);

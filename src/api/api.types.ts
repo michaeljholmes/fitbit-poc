@@ -24,7 +24,5 @@ export interface User {
   }
 
   export interface FitbitDetails {
-    clientId: string;
-    codeChallenge: string;
-    generatedState: string;
+    url: string;
 }

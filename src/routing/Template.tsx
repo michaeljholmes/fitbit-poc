@@ -42,11 +42,11 @@ export const Template = () => {
   });
 
   const {isAuthenticated, isLoading: isAuth0Loading, user} = useIsUserLoggedIn();
-
+  console.log(user);
   const { logout, loginWithRedirect } = useAuth0();
 
   useEffect(() => {
-    if(!isAuthenticated && !isAuth0Loading){
+    if(!isAuthenticated && !isAuth0Loading && !user){
       loginWithRedirect({authorizationParams: {screen_hint:"login"}});
     }
   }, [isAuthenticated, isAuth0Loading]);

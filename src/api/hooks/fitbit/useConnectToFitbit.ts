@@ -1,22 +1,18 @@
 import { UseMutationResult, useMutation, useQueryClient } from "react-query";
 import { connectToFitbit } from "../../requests/userRequests";
-import { User } from "../../api.types";
 
 interface ConnectToFitbit {
+    userId: string;
     code: string,
     state: string
 }
 
-export const useConnectToFitbit = (): UseMutationResult<User, unknown, ConnectToFitbit>=> {
+export const useConnectToFitbit = (): UseMutationResult<void, unknown, ConnectToFitbit>=> {
 
-    // TBD
-    const isLoggedIn = true; 
-    const currentUserId = "user1";
     const queryClient = useQueryClient();
     
-
     return useMutation({
-      mutationFn: ({code, state}: ConnectToFitbit) => connectToFitbit(currentUserId, code, state),
+      mutationFn: ({userId, code, state}: ConnectToFitbit) => connectToFitbit(userId, code, state),
       mutationKey: ["connectToFitbit"],
       onSuccess: () => {
         queryClient.invalidateQueries('getUserByEmail');
