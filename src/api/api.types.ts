@@ -1,5 +1,5 @@
 export interface User {
-    id: string,
+    userId: string,
     email: string,
     username: string,
     competitionId?: string;
@@ -9,13 +9,14 @@ export interface User {
 
   export interface Competition {
     id: string;
-    name: string;
+    competitionName: string;
     owner: User;
     startTime: string;
   }
 
   export interface Team {
-    id: string;
+    teamId: string;
+    rank: number;
     teamName: string;
     username: string;
     position: number,
@@ -23,7 +24,5 @@ export interface User {
   }
 
   export interface FitbitDetails {
-    clientId: string;
-    codeChallenge: string;
-    generatedState: string;
+    url: string;
 }

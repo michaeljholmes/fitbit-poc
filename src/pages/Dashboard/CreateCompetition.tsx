@@ -10,7 +10,7 @@ interface CreateCompetitioneProps {
     user: User;
 }
 
-export const CreateCompetition = ({user: {id}}: CreateCompetitioneProps) => {
+export const CreateCompetition = ({user: {userId}}: CreateCompetitioneProps) => {
 
     const [value, setValue] = useState("1");
 
@@ -18,7 +18,7 @@ export const CreateCompetition = ({user: {id}}: CreateCompetitioneProps) => {
       setValue(newValue);
     };
 
-    const { data: generatedLink } = useGenerateTeamLink(id);
+    const { data: generatedLink } = useGenerateTeamLink(userId);
     const hasGeneratedLink = Boolean(generatedLink);
 
     return (

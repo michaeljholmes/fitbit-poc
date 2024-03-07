@@ -11,14 +11,14 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { rem } from "polished";
-import { Team, User } from "../api/api.types";
+import { Team } from "../api/api.types";
 
 interface TeamSummaryProps {
   team?: Team
 }
 
 export const TeamSummary = ({ team }: TeamSummaryProps) => {
-  console.log(team);
+
   return (
     <Stack sx={{ width: rem(300), zIndex: 1}}>
       {!team ? <CircularProgress sx={{alignSelf: "center"}}/> :
@@ -38,7 +38,7 @@ export const TeamSummary = ({ team }: TeamSummaryProps) => {
           }}
         >
           <Typography sx={{ flex: 1 }}>{team.teamName}</Typography>
-          <Typography align="right" sx={{ width: rem(90) }}>Team Total</Typography>
+          {/* <Typography align="right" sx={{ width: rem(90) }}>Team Total</Typography> */}
           <Typography align="right" sx={{ width: rem(80) }}>{team.users.reduce((acc, cv) => acc + cv.steps, 0)}</Typography>
         </Stack>
         <TableContainer component={Paper}>
@@ -53,9 +53,9 @@ export const TeamSummary = ({ team }: TeamSummaryProps) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {team.users?.map(({ id, username, steps }) => (
+              {team.users?.map(({userId, username, steps }) => (
                 <TableRow
-                  key={id}
+                  key={userId}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">

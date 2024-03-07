@@ -1,16 +1,12 @@
 import { UseMutationResult, useMutation, useQueryClient } from "react-query";
 import { disconnectToFitbit } from "../../requests/userRequests";
-import { User } from "../../api.types";
 
-export const useDisconnectFromFitbit = (): UseMutationResult<User, unknown, void>=> {
+export const useDisconnectFromFitbit = (): UseMutationResult<void, unknown, string>=> {
 
-    // TBD
-    const isLoggedIn = true; 
-    const currentUserId = "user1";    
     const queryClient = useQueryClient();
 
     return useMutation({
-      mutationFn: () => disconnectToFitbit(currentUserId),
+      mutationFn: (userId) => disconnectToFitbit(userId),
       mutationKey: ["disconnectToFitbit"],
       onSuccess: () => {
         queryClient.invalidateQueries('getUserByEmail');

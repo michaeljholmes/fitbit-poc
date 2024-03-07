@@ -1,8 +1,7 @@
 import { api } from "..";
 import { Paged } from "../../types";
 import { Competition, Team, User } from "../api.types";
-import { getCompetitionEndpoint, getCompetitionTeamsEndpoint, getTeamMembersEndpoint } from "./endpoints";
-const isProduction = import.meta.env.MODE === "production";
+import { getCompetitionEndpoint, getCompetitionMembersEndpoint, getCompetitionTeamsEndpoint, getTeamMembersEndpoint } from "./endpoints";
 
 export const fetchCompetition = async (competitionId: string):Promise<Competition> => {
     const competitionResponse = await fetch(getCompetitionEndpoint(competitionId));
@@ -10,10 +9,8 @@ export const fetchCompetition = async (competitionId: string):Promise<Competitio
   }
 
   export const fetchCompetitionMembers = async (competitionId: string):Promise<User[]> => {
-    const result = await fetch(
-      `${api}/users`,
-    );
-    return await result.json();
+    const competitionMembersResponse = await fetch(getCompetitionMembersEndpoint(competitionId));
+    return await competitionMembersResponse.json();
   }  
 
   // For now, will assume it get paged teams
@@ -26,26 +23,11 @@ export const fetchCompetitionTeams = async (
  //  const totalReponse = await fetch(`${api}/teams?_page=${page + 1}&_limit=${pageSize}`);
   const teamResponse = await fetch(getCompetitionTeamsEndpoint(competitionId));
   const teamResult =  await teamResponse.json();
-  let teams = []; 
-  if(isProduction){
-    teams = teamResult;
-  } else {
-    teams = teamResult;
-  }
-  // const teams: Team[] = await Promise.all(teamIds.map(async (teamId: string) => {
-  //   const teamIdsResponse =  await fetch(getTeamMembersEndpoint(teamId));
-  //   const members =  teamIdsResponse.json();
-  //   return {
-  //     id: teamId,
-  //     users: members,
-  //     name: teamId
-  //   }
-  // }));
   return {
-    items: teams,
+    items: teamResult.teams,
     pageSize,
     page,
-    totalItems: 3,
+    totalItems: teamResult.teams.length, // Set to total length for now
   };
 };
 

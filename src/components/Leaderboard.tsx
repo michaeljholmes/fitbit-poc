@@ -12,7 +12,7 @@ const columns: GridColDef[] = [
     field: "teamName",
     headerName: "Name",
     disableColumnMenu: true,
-    width: 100,
+    width: 300,
     editable: false,
   },
 ];
@@ -27,6 +27,7 @@ interface CustomDataGridProps {
   setRowSelectionModel?: (id: string[]) => void;
   rowSelectionModel: DataGridProps["rowSelectionModel"];
   isLoading: boolean;
+  getRowId?: (row: any) => string;
 }
 
 // const tableColour = "#005891";
@@ -41,7 +42,9 @@ export const Leaderbaord = ({
   rowSelectionModel,
   setRowSelectionModel,
   isLoading,
-}: CustomDataGridProps) => (
+  getRowId,
+}: CustomDataGridProps) => {
+  return (
   <DataGrid
     sx={{
       ...sx,
@@ -72,7 +75,7 @@ export const Leaderbaord = ({
     }}
     rowHeight={40}
     columnHeaderHeight={40}
-    getRowId={(row) => row.id}
+    getRowId={(row) => getRowId ? getRowId(row) : row.id}
     columns={columns}
     initialState={{
       columns: {
@@ -96,4 +99,5 @@ export const Leaderbaord = ({
     rowSelectionModel={rowSelectionModel}
     loading={isLoading}
   />
-);
+  )
+};

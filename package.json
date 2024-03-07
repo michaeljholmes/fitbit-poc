@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "start": "vite --mode production",
-    "start-dev": "vite",
+    "start:dev": "vite",
     "build": "tsc && vite build -d",
     "preview": "vite preview",
     "server": "json-server --watch ./src/mockData/db.json --port 6789",

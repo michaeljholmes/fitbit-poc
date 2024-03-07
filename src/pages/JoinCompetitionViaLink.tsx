@@ -1,46 +1,24 @@
-import { Button, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { useCompetition } from "../api/hooks/useCompetition";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useAsync } from "react-use";
-import { useUser } from "../api/hooks/users/useUser";
-import { useCreateUser } from "../api/hooks/users/useCreateUser";
+import { rem } from "polished";
+import { Copyright } from "../components/Copyright";
+import { LoadingContainer } from "../components/LoadingContainer";
 
 export const JoinCompetitionViaLink = () => {
 
+    const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
     const [searchParams] = useSearchParams();
-    const navigate = useNavigate();
-
     const competitionId = searchParams.get('competitionId');
     const { data: competition, isLoading: isCompetitionLoading } = useCompetition(competitionId ?? undefined);
 
-    const { isLoading: isAuth0Loading, isAuthenticated, loginWithRedirect, user } = useAuth0();
+    if(isCompetitionLoading || isLoading){
+        return <LoadingContainer/>;
+    }
 
-    const { data: foundUser, isLoading: isUserLoading } = useUser(user?.email ?? undefined);
-
-    const isLoading = isCompetitionLoading || isAuth0Loading || isUserLoading;
-
-    const createUser = useCreateUser();
-
-    useAsync(async () => {
-        if (isLoading) {
-            return;
-        }
-        if (foundUser){
-            navigate("/dashboard");
-        }
-        if(isAuthenticated && user && competition){
-            // Create user
-            if(user.email){
-                await createUser.mutateAsync(user.email);
-                // Then direct to dashboard
-                navigate("/dashboard");
-            }
-        }
-    }, [isAuthenticated, user, competition, foundUser, isLoading, createUser])
-
-    if(isLoading){
-        return <Typography>Loading...</Typography>
+    if(isAuthenticated){
+        return <Navigate to="/dashboard"/>
     }
     
     if(!competition){
@@ -48,17 +26,37 @@ export const JoinCompetitionViaLink = () => {
     }
 
     return (
-        <>
-            <Typography variant="h2">
-                Welcome to Stridewars!
-            </Typography>
-            <Typography variant="body1">
-                You been invited to join '{competition.name}' competition by '{competition?.owner?.username}'. Sign up below.
-            </Typography>  
-            <Button 
-                variant="outlined" 
-                onClick={() => loginWithRedirect({authorizationParams: { screen_hint: "signup"}})}
-            >Sign up!</Button>       
-        </>
+        <Stack justifyContent={"space-between"} sx={{backgroundColor: "#f2f2f2", height: "100vh"}}>
+            <Stack alignItems={"center"} sx={{px: 4}}>
+                <Typography variant="h2" sx={{mt: 4}}>
+                    Welcome to Stridewars!
+                </Typography>
+                <Typography variant="body1" sx={{mt: 4}}>
+                    You been invited to join '{competition.competitionName}' competition by '{competition?.owner?.username}'. Click the 'Sign up' button below to get started.
+                </Typography>  
+                <Button 
+                    sx={{width: rem(150), mt: 4}}
+                    variant="outlined" 
+                    onClick={() => loginWithRedirect({authorizationParams: {
+                        screen_hint: "signup"
+                    }, appState: {
+                        isNewUser: true,
+                        competitionId
+                    }})}
+                >Sign up!</Button> 
+                </Stack>
+            <Copyright
+                sx={{
+                    alignSelf: "end",
+                    width: "100%",
+                    backgroundColor: (theme) => theme.palette.primary.main,
+                    color: (theme) => theme.palette.common.white,
+                    height: rem(100),
+                    lineHeight: rem(100),
+                }}
+                websiteLink="https://www.stridewars/com"
+                websiteName="Stride Wars"
+            />      
+        </Stack>
     );
 }

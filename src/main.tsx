@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
@@ -6,7 +5,8 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { BaseRouter } from "./routing/BaseRouter";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
-import { Auth0Provider } from '@auth0/auth0-react';
+import { RecoilRoot } from "recoil";
+import { AuthHandleProvidor } from "./AuthHandleProvidor";
 
 const queryClient = new QueryClient();
 const theme = createTheme({
@@ -33,21 +33,16 @@ const theme = createTheme({
 });
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <Auth0Provider
-    domain="dev-1zqk355nlvfcwlml.us.auth0.com"
-    clientId="55MwJZOyVGXhrLdYFi1dgF4z55eqc9gf"
-    authorizationParams={{
-      redirect_uri: "http://localhost:5173/dashboard",
-    }}
-    useRefreshTokens={true}
-    cacheLocation="localstorage"  
-  >
+
     <BrowserRouter>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
-          <BaseRouter />
+          <RecoilRoot>
+            <AuthHandleProvidor>
+              <BaseRouter />
+            </AuthHandleProvidor>
+          </RecoilRoot>
         </ThemeProvider>
       </QueryClientProvider>
     </BrowserRouter>
-  </Auth0Provider>
 );

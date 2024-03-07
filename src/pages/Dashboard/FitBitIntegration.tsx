@@ -1,57 +1,50 @@
 import { Button, CircularProgress, Stack, Typography } from "@mui/material";
 import { rem } from "polished";
-import { useLocation, useOutletContext, useSearchParams } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { useAsync } from "react-use";
 import { OutletContext } from "../../routing/Template";
 import { useConnectToFitbit } from "../../api/hooks/fitbit/useConnectToFitbit";
 import { useDisconnectFromFitbit } from "../../api/hooks/fitbit/useDisconnectFromFitbit";
-import { useFititDetails } from "../../api/hooks/fitbit/useFitbitDetails";
-import { useMemo } from "react";
+import { getFitbitDetails } from "../../api/requests/fitbitRequests";
+import { LoadingContainer } from "../../components/LoadingContainer";
 
-const redirectUrl = encodeURIComponent(`${import.meta.env.VITE_URL}/dashboard/tracker`);
+interface FitBitIntegrationProps {
+    code?: string;
+    state?: string;
+}
 
-export const FitBitIntegration = () => {
+export const FitBitIntegration = ({code, state}: FitBitIntegrationProps) => {
 
     const { user } = useOutletContext<OutletContext>();
     const { isFitbitIntegrated} = user;
-    const [searchParams, setSearchParams] = useSearchParams();
+    // const [searchParams, setSearchParams] = useSearchParams();
     const connectToFitbit = useConnectToFitbit();
     const disconnectFromFitbit = useDisconnectFromFitbit();
-    const {data: fitbitDetails} = useFititDetails();
 
-    const authLink = useMemo(() => {
-        if (fitbitDetails) {
-            const {clientId, codeChallenge, generatedState} = fitbitDetails;
-            return `https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=${clientId}&scope=activity&
-                code_challenge=${codeChallenge}&code_challenge_method=S256&state=${generatedState}&redirect_uri=${redirectUrl}`;
+    const {loading, value: authLink} = useAsync(async () => {
+        const result = await getFitbitDetails(user.userId);
+        if(result.url){
+            return result.url;
         }
-    }, [fitbitDetails])
+    }, [user]);
 
     //Validate user server side, trigger refetching user
     useAsync(async () => {
-      const code = searchParams.get("code");
-      const state = searchParams.get("state");
-      if (!fitbitDetails) return;
-      const {generatedState} = fitbitDetails;
-      if (state !== generatedState) {
-        return;
-      }
+      if(!user.userId) return;
+      if (!state) return;
       if (!code) return;
       try {
-        searchParams.delete('code');
-        searchParams.delete('state');
-        setSearchParams(searchParams);
-        await connectToFitbit.mutateAsync({code, state});
+        await connectToFitbit.mutateAsync({userId: user.userId, code, state});
       } catch (e) {
         // Probably use toast notifications for errors
         return undefined;
       }
-    }, [searchParams, fitbitDetails]);
+    }, [code, state, user]);
 
     // Revoke token server side, trigger refetching user
     const revokeUser = async () => {
         try {
-            await disconnectFromFitbit.mutateAsync();
+            await disconnectFromFitbit.mutateAsync(user.userId);
         } catch (e){
             console.log(e);
         }
@@ -71,6 +64,10 @@ export const FitBitIntegration = () => {
         );
     }
 
+    if(loading){
+        return <LoadingContainer/>;
+    }
+  
     return (
         <Stack>
             <Typography variant="h3">
@@ -79,16 +76,13 @@ export const FitBitIntegration = () => {
             <Typography>
                 If you already own a fitbit, simply click the 'integrate' button below
             </Typography>
-            {authLink ?
-                <Button
+                {authLink && <Button
                     onClick={() => {
                         window.location.href = authLink;
                     }}
                     >
                     Integrate
-                </Button> :
-                <CircularProgress/>
-            }
+                </Button>}
             <Typography variant="h3">
                 New to Fitbit?
             </Typography>
