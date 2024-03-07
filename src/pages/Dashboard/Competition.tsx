@@ -6,7 +6,6 @@ import { Stack, Box, Typography } from "@mui/material";
 import { NotFitbitIntegrated } from "../../components/NotFitbitIntegrated";
 import { useCompetition } from "../../api/hooks/useCompetition";
 import { fetchCompetitionTeams } from "../../api/requests/competitionRequests";
-import { useTeam } from "../../api/hooks/teams/useTeam";
 import { Team, User } from "../../api/api.types";
 import { isDateInFuture } from "../../utils/isDateInFuture";
 import { IsOwner } from "../../components/IsOwner";
@@ -26,7 +25,7 @@ export const Competition = ({
     userId
   }
 }: CompetitionProps) => {
-  const [pageSize, setPageSize] = useState(2);
+  const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(0);
   const isNotFitbitEnabled = !isFitbitIntegrated;
 
@@ -36,28 +35,24 @@ export const Competition = ({
 
   const [selectedTeam, setSelectedTeam] = useState<Team | undefined>();
 
+  const [sortedTeams, setSortedTeams] = useState<Team[]>([]);
+
   const { isLoading: isTeamsLoading, data: teams } = useQuery({
     queryKey: ["teams", pageSize, page],
     queryFn: () => fetchCompetitionTeams(competitionId, pageSize, page),
     onSuccess: (teams) => {
-      setSelectedTeam(teams.items[0]);
+      if(teams?.items){
+        setSelectedTeam(teams.items[0]);
+        const copy = [...teams.items];
+        setSortedTeams(copy.sort((a, b) => a.rank - b.rank));
+      }
     },
     enabled: Boolean(competition)
   });
 
-  const sortedTeams = useMemo(() => {
-    if(teams?.items){
-      const copy = [...teams.items];
-      return copy.sort((a, b) => a.rank - b.rank)
-    }
-    return [];
-  }, [teams]);
-
   const [selectedRowId, setSelectedRowId] = useState<string[] | undefined>(
     undefined,
   );
-
-  // const { data: team } = useTeam(selectedTeam);
 
   const isOwner = useMemo(() => competition?.owner.userId === userId, [userId, competition]);
 
@@ -76,10 +71,11 @@ export const Competition = ({
   if(!competition){
     return <Typography>No competition found</Typography>
   }
-
+  console.log(sortedTeams);
+  console.log(pageSize * page, (pageSize * page) + pageSize)
   return (
     <Stack sx={{ height: "100%", backgroundColor: "#ECF0F1", p: 2}}>
-      {/* {isOwner && isCompetitionInFuture && <IsOwner sx={{mb: 2}} competitionId={competitionId} />}*/}
+      {isOwner && isCompetitionInFuture && <IsOwner sx={{mb: 2}} competitionId={competitionId} />}
       {isNotFitbitEnabled && <NotFitbitIntegrated />} 
       {isCompetitionInFuture ?
         <CompetitionNotStarted competition={competition}/>
@@ -90,7 +86,7 @@ export const Competition = ({
             <TeamSummary team={selectedTeam} />
             <Leaderbaord
               sx={{ ml: 2 }}
-              rows={sortedTeams}
+              rows={sortedTeams.slice(pageSize * page, (pageSize * page) + pageSize)}
               onPaginationModelChange={(model) => {
                 setPage(model.page);
                 setPageSize(model.pageSize);
@@ -98,7 +94,7 @@ export const Competition = ({
               getRowId={(row: Team) => row?.teamId}
               rowCount={teams?.totalItems ?? 0}
               paginationModel={{ page, pageSize }}
-              pageSizeOptions={[2, 4, 6]}
+              pageSizeOptions={[10, 15, 20]}
               rowSelectionModel={selectedRowId}
               setRowSelectionModel={onSelectedRow}
               isLoading={isCompetitionLoading || isTeamsLoading}

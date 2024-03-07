@@ -11,7 +11,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import { rem } from "polished";
-import { Team, User } from "../api/api.types";
+import { Team } from "../api/api.types";
 
 interface TeamSummaryProps {
   team?: Team

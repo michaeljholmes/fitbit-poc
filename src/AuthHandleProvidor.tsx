@@ -9,12 +9,14 @@ export const AuthHandleProvidor = ({children}: PropsWithChildren) => {
   const navigate = useNavigate();
   
   const onRedirectCallback = useEventCallback(async (appState?: any, user?: User) => {
-    const {isNewUser, competitionId} = appState;
-    if(Boolean(isNewUser) && competitionId && user?.email){
-      const newUser = await postUser(user?.email);
-      console.log(newUser);
-      if(!newUser){
-        navigate("/error");
+    if(appState) {
+      const {isNewUser, competitionId} = appState;
+      if(Boolean(isNewUser) && competitionId && user?.email){
+        const newUser = await postUser(user?.email);
+        console.log(newUser);
+        if(!newUser){
+          navigate("/error");
+        }
       }
     }
     navigate("/dashboard");
@@ -28,6 +30,7 @@ export const AuthHandleProvidor = ({children}: PropsWithChildren) => {
         redirect_uri: `${import.meta.env.VITE_URL}/dashboard`
       }}
       useRefreshTokens={true}
+
       cacheLocation="localstorage"  
       onRedirectCallback={onRedirectCallback}
   >

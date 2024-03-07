@@ -1,21 +1,24 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { useCompetition } from "../api/hooks/useCompetition";
 import { useAuth0 } from "@auth0/auth0-react";
 import { rem } from "polished";
 import { Copyright } from "../components/Copyright";
+import { LoadingContainer } from "../components/LoadingContainer";
 
 export const JoinCompetitionViaLink = () => {
 
-    const { loginWithRedirect } = useAuth0();
-    
+    const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
     const [searchParams] = useSearchParams();
-
     const competitionId = searchParams.get('competitionId');
     const { data: competition, isLoading: isCompetitionLoading } = useCompetition(competitionId ?? undefined);
 
-    if(isCompetitionLoading){
-        return <Typography>Loading...</Typography>
+    if(isCompetitionLoading || isLoading){
+        return <LoadingContainer/>;
+    }
+
+    if(isAuthenticated){
+        return <Navigate to="/dashboard"/>
     }
     
     if(!competition){

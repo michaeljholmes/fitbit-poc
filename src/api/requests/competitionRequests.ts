@@ -27,7 +27,7 @@ export const fetchCompetitionTeams = async (
     items: teamResult.teams,
     pageSize,
     page,
-    totalItems: 3,
+    totalItems: teamResult.teams.length, // Set to total length for now
   };
 };
 

@@ -1,6 +1,6 @@
 import { api } from "..";
 import { User } from "../api.types";
-import { deleteFitbitTokens, getUserByEmailEndpoint, postUserEndpoint } from "./endpoints";
+import { deleteFitbitTokens, getUserByEmailEndpoint, postFitbitAuthURL, postUserEndpoint } from "./endpoints";
 
 export const getUserByEmail = async (email: string): Promise<User | undefined> => {
     try {
@@ -38,7 +38,7 @@ export const postUser = async (email: string): Promise<User | undefined> => {
 }
 
 export const connectToFitbit = async (userId: string, state: string, code: string): Promise<void> => {
-    await fetch(`${api}/fitbit/tokens`, {
+    await fetch(postFitbitAuthURL(), {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
