@@ -9,6 +9,16 @@ const columns: GridColDef[] = [
     disableColumnMenu: true,
   },
   {
+    field: "position",
+    headerName: "Position",
+    disableColumnMenu: true,
+    width: 100,
+    editable: false,
+    valueGetter: ({row}) => {
+      return row.rank;
+  },
+  },
+  {
     field: "teamName",
     headerName: "Name",
     disableColumnMenu: true,

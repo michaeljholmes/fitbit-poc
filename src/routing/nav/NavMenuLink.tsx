@@ -45,6 +45,10 @@ const StyledNavLink = styled(NavLink)(({ theme }) => ({
   height: rem(50),
   width: rem(250),
   paddingLeft: theme.spacing(4),
+  [theme.breakpoints.up('lg')]: {
+    width: rem(180),
+    paddingLeft: theme.spacing(2),
+  },
   alignItems: "center",
   color: theme.palette.common.white,
   "&:hover": {
