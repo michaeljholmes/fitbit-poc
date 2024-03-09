@@ -9,18 +9,20 @@ import {
   TableContainer,
   TableRow,
   CircularProgress,
+  SxProps,
 } from "@mui/material";
 import { rem } from "polished";
 import { Team } from "../api/api.types";
 
 interface TeamSummaryProps {
-  team?: Team
+  team?: Team;
+  widthPx?: number
 }
 
-export const TeamSummary = ({ team }: TeamSummaryProps) => {
+export const TeamSummary = ({ team, widthPx = 300 }: TeamSummaryProps) => {
 
   return (
-    <Stack sx={{ width: rem(300), zIndex: 1}}>
+    <Stack sx={{ width: rem(widthPx), zIndex: 1}}>
       {!team ? <CircularProgress sx={{alignSelf: "center"}}/> :
       <>
         <Stack
@@ -43,7 +45,7 @@ export const TeamSummary = ({ team }: TeamSummaryProps) => {
         </Stack>
         <TableContainer component={Paper}>
           <Table
-            sx={{ minWidth: rem(300), maxWidth: rem(300) }}
+            sx={{ minWidth: rem(widthPx), maxWidth: rem(300) }}
             aria-label="simple table"
           >
             <TableHead sx={{}}>

@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { Leaderbaord } from "../../components/Leaderboard";
 import { useMemo, useState } from "react";
 import { TeamSummary } from "../../components/TeamSummary";
-import { Stack, Box, Typography } from "@mui/material";
+import { Stack, Box, Typography, Button, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
 import { NotFitbitIntegrated } from "../../components/NotFitbitIntegrated";
 import { useCompetition } from "../../api/hooks/useCompetition";
 import { fetchCompetitionTeams } from "../../api/requests/competitionRequests";
@@ -10,6 +10,8 @@ import { Team, User } from "../../api/api.types";
 import { isDateInFuture } from "../../utils/isDateInFuture";
 import { IsOwner } from "../../components/IsOwner";
 import { CompetitionNotStarted } from "../../components/CompetitionNotStarted";
+import { useIsMobile, useIsTabletDown } from "../../hooks/breakpoint";
+import { rem } from "polished";
 
 interface CompetitionProps {
   user: User;
@@ -25,9 +27,15 @@ export const Competition = ({
     userId
   }
 }: CompetitionProps) => {
+
+  const isTabletDown = useIsTabletDown();
+  const isMobile = useIsMobile();
+
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(0);
-  const isNotFitbitEnabled = !isFitbitIntegrated;
+  const isNotFitbitEnabled = false;//!isFitbitIntegrated;
+
+  const [openModal, setOpenModal] = useState(false);
 
   const { isLoading: isCompetitionLoading, data: competition } = useCompetition(competitionId);
   const isCompetitionInFuture = useMemo(() => 
@@ -61,6 +69,7 @@ export const Competition = ({
     const team = teams?.items.find(({ teamId }) => teamId === row[0]);
     if (team) {
       setSelectedTeam(team);
+      setOpenModal(true);
     }
   };
 
@@ -71,8 +80,7 @@ export const Competition = ({
   if(!competition){
     return <Typography>No competition found</Typography>
   }
-  console.log(sortedTeams);
-  console.log(pageSize * page, (pageSize * page) + pageSize)
+
   return (
     <Stack sx={{ height: "100%", backgroundColor: "#ECF0F1", p: 2}}>
       {isOwner && isCompetitionInFuture && <IsOwner sx={{mb: 2}} competitionId={competitionId} />}
@@ -82,10 +90,29 @@ export const Competition = ({
         :
         <Stack sx={{flex: 1, position: "relative"}}>
           <Box sx={{...(isNotFitbitEnabled ? {position: "absolute", backgroundColor: "black", flex: 1, width: "100%", height: "100%", opacity: 0.5, zIndex: 2}: {})}}/>
-          <Stack flexDirection={"row"} sx={{ p: 4}}>
-            <TeamSummary team={selectedTeam} />
+          <Stack flexDirection={isTabletDown ? "column" : "row"} sx={{ p: 2}}>
+            {isTabletDown ? 
+            <>
+            <Typography sx={{mb: 1}}>Select a team to view more detail!</Typography>
+              <Dialog
+                open={Boolean(selectedTeam) && openModal}
+                onClose={() => setOpenModal(false)}
+                aria-labelledby="selected-team-title"
+                aria-describedby="selected-team-description"
+              >
+                <DialogContent sx={{p: isMobile? 2: 5}}>
+                  <TeamSummary widthPx={isMobile ? 250 : 300} team={selectedTeam} />
+                </DialogContent>
+                <DialogActions sx={{pr: 5, pb: 5}}>
+                  <Button variant="outlined" onClick={() => setOpenModal(false)} autoFocus>
+                    Close
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </>
+            : <TeamSummary team={selectedTeam} />}
             <Leaderbaord
-              sx={{ ml: 2 }}
+              sx={{...(!isTabletDown && {ml: 2 })}}
               rows={sortedTeams.slice(pageSize * page, (pageSize * page) + pageSize)}
               onPaginationModelChange={(model) => {
                 setPage(model.page);

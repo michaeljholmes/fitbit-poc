@@ -16,5 +16,5 @@ Trial authenticated endpoint and plug in
 
 It might in time be worth seperating out steps from user.
 
-mobile friendly
+toast notifications
 
