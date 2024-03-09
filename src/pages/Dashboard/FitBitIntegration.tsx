@@ -1,16 +1,19 @@
 import { Button, Stack, Typography } from "@mui/material";
 import { rem } from "polished";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useSearchParams } from "react-router-dom";
 import { useAsync } from "react-use";
 import { OutletContext } from "../../routing/Template";
 import { useDisconnectFromFitbit } from "../../api/hooks/fitbit/useDisconnectFromFitbit";
 import { getFitbitDetails } from "../../api/requests/fitbitRequests";
 import { LoadingContainer } from "../../components/LoadingContainer";
+import { useConnectToFitbit } from "../../api/hooks/fitbit/useConnectToFitbit";
 
 export const FitBitIntegration = () => {
 
     const { user } = useOutletContext<OutletContext>();
     const { isFitbitIntegrated} = user;
+    const [searchParams, setSearchParams] = useSearchParams();
+    const connectToFitbit = useConnectToFitbit();
 
     const disconnectFromFitbit = useDisconnectFromFitbit();
 
@@ -29,6 +32,25 @@ export const FitBitIntegration = () => {
             console.log(e);
         }
     }
+
+    useAsync(async () => {
+        if (user) {
+            const code = searchParams.get("fitbitCode");
+            const state = searchParams.get("fitbitState");
+            console.log(code, state);
+            if (!state) return;
+            if (!code) return;
+            try {
+                searchParams.delete('fitbitCode');
+                searchParams.delete('fitbitState');
+                setSearchParams(searchParams);
+                await connectToFitbit.mutateAsync({userId: user.userId, code, state});
+            } catch (e) {
+                // Probably use toast notifications for errors
+                // return undefined;
+            }
+        }
+    }, [searchParams, user]);
     
     if(isFitbitIntegrated) {
         return(
