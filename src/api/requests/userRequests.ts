@@ -37,7 +37,7 @@ export const postUser = async (email: string): Promise<User | undefined> => {
     }
 }
 
-export const connectToFitbit = async (userId: string, state: string, code: string): Promise<void> => {
+export const connectToFitbit = async (userId: string, code: string, state: string): Promise<void> => {
     await fetch(postFitbitAuthURL(), {
         method: "POST",
         headers: {

@@ -8,7 +8,7 @@ export const useIsUserLoggedIn = () => {
         isLoading: isAuthLoading,
         isAuthenticated,
         user,
-        logout
+        logout,
     } = useAuth0();
 
     const {data, isLoading} = useQuery({
