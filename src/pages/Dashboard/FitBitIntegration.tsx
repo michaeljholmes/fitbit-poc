@@ -18,11 +18,10 @@ export const FitBitIntegration = () => {
     const disconnectFromFitbit = useDisconnectFromFitbit();
 
     const {loading: isLoadingFitbitAuthLink, value: authLink} = useAsync(async () => {
-        // const result = await getFitbitDetails(user.userId);
-        // if(result.url){
-            // console.log("url", result.url)
-            return "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=23RRWJ&scope=activity&code_challenge=E56uzBdHaQdP-5iMIO7XEk-iYCT0_ALzWeHV8OSpe4I&code_challenge_method=S256&state=FdIlo2NQjuF5oKtnxy6yJKJ7FFOQKGeR09aAoSYagHM&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Fhandle-fitbit";
-        // }
+        const result = await getFitbitDetails(user.userId);
+        if(result.url){
+            return result.url;
+        }
     }, [user]);
 
     // Revoke token server side, trigger refetching user
