@@ -18,9 +18,12 @@ export const FitBitIntegration = () => {
     const disconnectFromFitbit = useDisconnectFromFitbit();
 
     const {loading: isLoadingFitbitAuthLink, value: authLink} = useAsync(async () => {
-        const result = await getFitbitDetails(user.userId);
-        if(result.url){
-            return result.url;
+        const code = searchParams.get("fitbitCode");
+        if(!code) {
+            const result = await getFitbitDetails(user.userId);
+            if(result.url){
+                return result.url;
+            }
         }
     }, [user]);
 
