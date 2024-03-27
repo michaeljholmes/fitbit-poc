@@ -40,7 +40,6 @@ export const FitBitIntegration = () => {
         if (user) {
             const code = searchParams.get("fitbitCode");
             const state = searchParams.get("fitbitState");
-            console.log(code, state);
             if (!state) return;
             if (!code) return;
             try {
